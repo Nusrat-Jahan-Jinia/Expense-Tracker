@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:partials="commonCssHead">
+     <head th:insert="~{fragments/common-fragment.html :: baseCssHead}" th:remove="tag"></head>
+</head>
+
+<body>
+
+<div class="content-wrapper" layout:fragment="contentBody">
+     Child content is Here!
+</div>
+
+
+<span th:insert="~{partials.html :: baseJsFooter}" th:remove="tag"></span>
+</body>
+</html>
