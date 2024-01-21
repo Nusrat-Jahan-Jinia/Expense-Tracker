@@ -20,9 +20,6 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
     @GetMapping("")
     public ModelAndView home(){
       ModelAndView modelAndView = new ModelAndView();

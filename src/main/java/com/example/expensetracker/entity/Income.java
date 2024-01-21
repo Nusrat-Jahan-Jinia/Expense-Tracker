@@ -43,6 +43,9 @@ public class Income {
     @JsonIgnore
     private LocalDateTime updatedAt;
 
+    public Income() {
+    }
+
     public Income(Integer id, String source, Integer amount, Tag tag, LocalDate date, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.source = source;
