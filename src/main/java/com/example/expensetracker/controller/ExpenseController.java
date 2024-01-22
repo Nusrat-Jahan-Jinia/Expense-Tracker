@@ -7,10 +7,7 @@ import com.example.expensetracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -40,7 +37,7 @@ public class ExpenseController {
         modelAndView.addObject("dto", new Expense());
         modelAndView.addObject("categories", categories);
         modelAndView.addObject("method", "post");
-        modelAndView.setViewName("expense/create-edit.html");
+        modelAndView.setViewName("expense/create.html");
         return modelAndView;
     }
 
@@ -55,4 +52,46 @@ public class ExpenseController {
         }
         return "redirect:/expenses";
     }
+
+//    @GetMapping("/edit/{id}")
+//    public String edit(@PathVariable("id") int id, Model model) {
+//        Expense expense = expenseService.getExpenseById(id);
+//        List<Category> categories = categoryService.getCategories();
+//        model.addAttribute("dto", expense);
+//        model.addAttribute("method", "post");
+//        model.addAttribute("categories", categories);
+//        return "expense/create.html";
+//    }
+//
+//    @PostMapping("/update")
+//    public String update(@ModelAttribute("expense") Expense expense) {
+//        expenseService.updateExpense(expense);
+//        return "redirect:/expenses";
+//    }
+
+    @GetMapping("/{id}/update")
+    public ModelAndView update(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("id", id);
+        modelAndView.addObject("dto", expenseService.getExpenseById(id));
+        List<Category> categories = categoryService.getCategories();
+        modelAndView.addObject("categories", categories);
+        modelAndView.addObject("method", "put");
+        modelAndView.setViewName("expense/edit.html");
+        return modelAndView;
+    }
+
+    @PutMapping(value = "/{id}")
+    public ModelAndView submitUpdate(@PathVariable("id") int id, Expense expense, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        boolean success = expenseService.edit(expense, id);
+        if (!success) {
+            model.addAttribute("result", "Something went wrong!");
+        } else {
+            model.addAttribute("result", "Successfully data updated!");
+        }
+        modelAndView.setViewName("expense/list.html");
+        return modelAndView;
+    }
+
 }

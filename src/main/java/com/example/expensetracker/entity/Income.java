@@ -31,13 +31,13 @@ public class Income {
     @Temporal(TemporalType.DATE)
     private LocalDate date;
 
-    @Column(name="created_at", nullable = false)
+    @Column(name="created_at")
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     @JsonIgnore
     private LocalDateTime createdAt;
 
-    @Column(name="updated_at", nullable = false)
+    @Column(name="updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     @JsonIgnore

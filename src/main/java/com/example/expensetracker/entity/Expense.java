@@ -6,13 +6,15 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="expense")
 public class Expense {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(insertable = false, updatable = false)
     private Integer id;
 
     @Column(name="title")
@@ -21,34 +23,33 @@ public class Expense {
     @Column(name="amount")
     private Integer amount;
 
-    @Column(name="date")
-    @Temporal(TemporalType.DATE)
-    private LocalDate date;
+//    @Column(name="date")
+//    @Temporal(TemporalType.DATE)
+//    private LocalDate date;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="category", referencedColumnName = "id")
-    private Category category;
+    private List<Category> category;
 
     @Column(name="created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    @JsonIgnore
+//    @JsonIgnore
     private LocalDateTime createdAt;
 
-    @Column(name="updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    @JsonIgnore
+//    @JsonIgnore
     private LocalDateTime updatedAt;
 
     public Expense() {
     }
 
-    public Expense(Integer id, String title, Integer amount, LocalDate date, Category category, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Expense(Integer id, String title, Integer amount, List<Category> category, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.amount = amount;
-        this.date = date;
         this.category = category;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -78,19 +79,11 @@ public class Expense {
         this.amount = amount;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Category getCategory() {
+    public List<Category> getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(List<Category> category) {
         this.category = category;
     }
 
@@ -116,10 +109,8 @@ public class Expense {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", amount=" + amount +
-                ", date=" + date +
+//                ", date=" + date +
                 ", category=" + category +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

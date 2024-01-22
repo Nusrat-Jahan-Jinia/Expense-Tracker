@@ -1,8 +1,8 @@
 package com.example.expensetracker.util;
 
+import jakarta.persistence.PrePersist;
+
 public class Utils {
 
-//    public static String getViewWithPrefix(String viewName){
-//        return Constants.VIEW_PREFIX + viewName;
-//    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.expensetracker.service;
 
+import com.example.expensetracker.entity.Expense;
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.repository.IncomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,4 +17,5 @@ public class IncomeService {
     public List<Income> getIncomes(){
         return (List<Income>) incomeRepository.findAll();
     }
+
 }

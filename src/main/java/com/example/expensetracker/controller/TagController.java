@@ -21,12 +21,9 @@ public class TagController {
     @GetMapping("")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
-
-        //adding data to the model
         modelAndView.addObject("data", tagService.getTags());
 
-        System.out.println("here" + tagService.getTags());
-        //setting the logical view name
+//        System.out.println("here" + tagService.getTags());
         modelAndView.setViewName("tag/list.html");
         return modelAndView;
     }
