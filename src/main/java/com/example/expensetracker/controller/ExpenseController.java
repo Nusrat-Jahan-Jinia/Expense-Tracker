@@ -53,22 +53,6 @@ public class ExpenseController {
         return "redirect:/expenses";
     }
 
-//    @GetMapping("/edit/{id}")
-//    public String edit(@PathVariable("id") int id, Model model) {
-//        Expense expense = expenseService.getExpenseById(id);
-//        List<Category> categories = categoryService.getCategories();
-//        model.addAttribute("dto", expense);
-//        model.addAttribute("method", "post");
-//        model.addAttribute("categories", categories);
-//        return "expense/create.html";
-//    }
-//
-//    @PostMapping("/update")
-//    public String update(@ModelAttribute("expense") Expense expense) {
-//        expenseService.updateExpense(expense);
-//        return "redirect:/expenses";
-//    }
-
     @GetMapping("/{id}/update")
     public ModelAndView update(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();

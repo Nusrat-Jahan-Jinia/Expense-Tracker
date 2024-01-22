@@ -15,7 +15,6 @@ public class Category {
     @Column(insertable = false, updatable = false)
     private Integer id;
 
-    @Column(name = "title")
     private String title;
 
     @Column(name="created_at", nullable = false)

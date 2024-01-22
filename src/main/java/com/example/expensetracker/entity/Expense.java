@@ -17,42 +17,47 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="title")
     private String title;
 
-    @Column(name="amount")
     private Integer amount;
 
-//    @Column(name="date")
-//    @Temporal(TemporalType.DATE)
-//    private LocalDate date;
+    @Temporal(TemporalType.DATE)
+    private LocalDate date;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="category", referencedColumnName = "id")
-    private List<Category> category;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category category;
 
-    @Column(name="created_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
+//    @Column(name="created_at", nullable = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @CreationTimestamp
 //    @JsonIgnore
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
+//    private LocalDateTime createdAt;
+//
+//    @Column(name = "updated_at", nullable = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @CreationTimestamp
 //    @JsonIgnore
-    private LocalDateTime updatedAt;
+//    private LocalDateTime updatedAt;
 
     public Expense() {
     }
 
-    public Expense(Integer id, String title, Integer amount, List<Category> category, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Expense(
+            Integer id,
+            String title,
+            Integer amount,
+            LocalDate date,
+            Category category
+//            LocalDateTime createdAt,
+//            LocalDateTime updatedAt
+    ) {
         this.id = id;
         this.title = title;
+        this.date = date;
         this.amount = amount;
         this.category = category;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+//        this.createdAt = createdAt;
+//        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {
@@ -71,6 +76,14 @@ public class Expense {
         this.title = title;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public Integer getAmount() {
         return amount;
     }
@@ -79,29 +92,29 @@ public class Expense {
         this.amount = amount;
     }
 
-    public List<Category> getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(List<Category> category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+//    public LocalDateTime getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    public void setCreatedAt(LocalDateTime createdAt) {
+//        this.createdAt = createdAt;
+//    }
+//
+//    public LocalDateTime getUpdatedAt() {
+//        return updatedAt;
+//    }
+//
+//    public void setUpdatedAt(LocalDateTime updatedAt) {
+//        this.updatedAt = updatedAt;
+//    }
 
     @Override
     public String toString() {
@@ -109,7 +122,7 @@ public class Expense {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", amount=" + amount +
-//                ", date=" + date +
+                ", date=" + date +
                 ", category=" + category +
                 '}';
     }
