@@ -78,4 +78,10 @@ public class ExpenseController {
         return modelAndView;
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteEntity(@PathVariable int id) {
+        expenseService.deleteById(id);
+        return "redirect:/expenses";
+    }
+
 }

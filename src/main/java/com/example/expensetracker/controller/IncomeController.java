@@ -77,4 +77,9 @@ public class IncomeController {
         modelAndView.setViewName("expense/list.html");
         return modelAndView;
     }
+    @GetMapping("/delete/{id}")
+    public String deleteEntity(@PathVariable int id) {
+        incomeService.deleteById(id);
+        return "redirect:/incomes";
+    }
 }

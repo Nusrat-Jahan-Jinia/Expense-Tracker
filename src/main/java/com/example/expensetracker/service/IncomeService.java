@@ -39,5 +39,8 @@ public class IncomeService {
             return false;
         }
     }
+    public void deleteById(int id) {
+        incomeRepository.deleteById(id);
+    }
 
 }

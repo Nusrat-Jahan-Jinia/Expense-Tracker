@@ -40,4 +40,8 @@ public class ExpenseService {
             return false;
         }
     }
+
+    public void deleteById(int id) {
+        expenseRepository.deleteById(id);
+    }
 }
