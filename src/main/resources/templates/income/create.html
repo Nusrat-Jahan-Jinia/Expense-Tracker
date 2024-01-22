@@ -13,6 +13,29 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-md-12">
+                <div class="d-flex py-5">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/incomes">Income</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/expenses">Expense</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/categories">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/tags">Tag</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="d-flex border border-light-subtle p-4 justify-content-center">
                     <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/incomes' : '/incomes/' + id}}">
                         <!-- Add CSRF token if needed -->

@@ -6,7 +6,28 @@
 </head>
 
 <body>
-
+<div th:partials="commonHead">
+     <div class="row">
+          <div class="col-md-12">
+               <div class="d-flex">
+                    <ul class="nav">
+                         <li class="nav-item">
+                              <a class="nav-link active" aria-current="page" href="#">Active</a>
+                         </li>
+                         <li class="nav-item">
+                              <a class="nav-link" href="#">Link</a>
+                         </li>
+                         <li class="nav-item">
+                              <a class="nav-link" href="#">Link</a>
+                         </li>
+                         <li class="nav-item">
+                              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+     </div>
+</div>
 <div class="content-wrapper" layout:fragment="contentBody">
      Child content is Here!
 </div>
