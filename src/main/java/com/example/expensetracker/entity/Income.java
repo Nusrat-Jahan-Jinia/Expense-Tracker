@@ -20,7 +20,7 @@ public class Income {
     private String source;
 
     @Column(name = "amount")
-    private Integer amount;
+    private Double amount;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Tag tag;
@@ -32,7 +32,7 @@ public class Income {
     public Income() {
     }
 
-    public Income(Integer id, String source, Integer amount, Tag tag, LocalDate date) {
+    public Income(Integer id, String source, Double amount, Tag tag, LocalDate date) {
         this.id = id;
         this.source = source;
         this.amount = amount;
@@ -56,11 +56,11 @@ public class Income {
         this.source = source;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

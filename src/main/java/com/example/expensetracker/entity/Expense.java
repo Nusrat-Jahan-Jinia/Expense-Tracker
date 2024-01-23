@@ -19,7 +19,7 @@ public class Expense {
 
     private String title;
 
-    private Integer amount;
+    private double amount;
 
     @Temporal(TemporalType.DATE)
     private LocalDate date;
@@ -45,7 +45,7 @@ public class Expense {
     public Expense(
             Integer id,
             String title,
-            Integer amount,
+            Double amount,
             LocalDate date,
             Category category
 //            LocalDateTime createdAt,
@@ -84,11 +84,11 @@ public class Expense {
         this.date = date;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
