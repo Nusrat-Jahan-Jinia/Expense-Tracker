@@ -35,23 +35,33 @@
             </div>
         </div>
 <div class="row">
-    <div class="col-md-12">
-        <div class="d-flex gap-3">
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+    <div class="col">
+            <div class="card">
+                <img th:src="@{/images/expense.jpeg}" class="card-img-top" alt="expense photo">
                 <div class="card-body">
-                    <h5 class="card-title">Total Expense December</h5>
-                    <h2 th:text="${count}"></h2>
+                    <h5 class="card-title" th:text="${'Total Expense '+ lastMonth + ' To ' + today}"></h5>
+                    <h2 th:text="${totalExpense}"></h2>
                     <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Total Income December</h5>
-                    <h2 th:text="${totalIncome}"></h2>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <img th:src="@{/images/income.jpeg}" class="card-img-top" alt="income photo">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${'Total Income '+ lastMonth + ' To ' + today}"></h5>
+                <h2 th:text="${totalIncome}"></h2>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <img th:src="@{/images/savings.jpeg}" class="card-img-top" alt="income photo">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${'Total Savings '+ lastMonth + ' To ' + today}"></h5>
+                <h2 th:text="${totalSavings}"></h2>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
     </div>

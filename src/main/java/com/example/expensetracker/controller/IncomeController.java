@@ -1,7 +1,5 @@
 package com.example.expensetracker.controller;
 
-import com.example.expensetracker.entity.Category;
-import com.example.expensetracker.entity.Expense;
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.entity.Tag;
 import com.example.expensetracker.service.IncomeService;

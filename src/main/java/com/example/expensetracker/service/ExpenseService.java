@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 @Service
 public class ExpenseService {
@@ -47,27 +49,14 @@ public class ExpenseService {
         expenseRepository.deleteById(id);
     }
 
-    public long getLastMonthExpenseCount() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -1);
-        Date lastMonthStartDate = getStartOfMonth(calendar.getTime());
-        Date lastMonthEndDate = getEndOfMonth(calendar.getTime());
+    public double getTotalAmountAfterLastMonth() {
+        LocalDate today = LocalDate.now();
+        LocalDate lastMonthEndDate = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
 
-        List<Expense> lastMonthExpenses = expenseRepository.findByDateBetween(lastMonthStartDate, lastMonthEndDate);
-        return lastMonthExpenses.size();
-    }
+        // Retrieve expenses after last month
+        List<Expense> expensesAfterLastMonth = expenseRepository.findByDateAfter(lastMonthEndDate);
 
-    private Date getStartOfMonth(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        return calendar.getTime();
-    }
-
-    private Date getEndOfMonth(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        return calendar.getTime();
+        // Calculate total amount
+        return expensesAfterLastMonth.stream().mapToDouble(Expense::getAmount).sum();
     }
 }
