@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+
+<head layout:fragment="commonCssHead">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+<div layout:fragment="contentBody">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-flex py-5">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/incomes">Income</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/expenses">Expense</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/categories">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/tags">Tag</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-12">
+                <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
+                    <div class="py-2">
+                        <a href="/orders/create"  class="bg-primary text-white p-3">Create Category</a>
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">name</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item: ${data}">
+                            <td th:text="${item.name}"></td>
+                            <td th:text="${item.gender}"></td>
+                            <td th:text="${item.email}"></td>
+                            <td th:each="product: ${item.products}">
+                                <ul>
+                                    <li th:text="${product.productName}"></li>
+                                    <li th:text="${product.price}"></li>
+                                    <li th:text="${product.qty}"></li>
+                                </ul>
+                            </td>
+                            <td><a th:href="@{/orders/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<span layout:fragment="customJsImportBlock">
+    <script src="http://localhost:35729/livereload.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</span>
+</body>
+</html>
