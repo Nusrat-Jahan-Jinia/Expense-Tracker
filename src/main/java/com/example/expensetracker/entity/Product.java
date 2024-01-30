@@ -2,6 +2,7 @@ package com.example.expensetracker.entity;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -9,7 +10,9 @@ import lombok.*;
 public class Product {
 
     @Id
-    private int pid;
+    @GeneratedValue
+    private int id;
+
     private String productName;
     private int qty;
     private int price;
@@ -17,19 +20,19 @@ public class Product {
     public Product() {
     }
 
-    public Product(int pid, String productName, int qty, int price) {
-        this.pid = pid;
+    public Product(int id, String productName, int qty, int price) {
+        this.id = id;
         this.productName = productName;
         this.qty = qty;
         this.price = price;
     }
 
-    public int getPid() {
-        return pid;
+    public int getId() {
+        return id;
     }
 
-    public void setPid(int pid) {
-        this.pid = pid;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getProductName() {
@@ -59,7 +62,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "pid=" + pid +
+                "id=" + id +
                 ", productName='" + productName + '\'' +
                 ", qty=" + qty +
                 ", price=" + price +

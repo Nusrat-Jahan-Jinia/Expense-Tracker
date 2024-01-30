@@ -46,44 +46,26 @@
         <div class="row justify-content-md-center">
             <div class="col-md-12">
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
-
-                    <h2>Add Customer and Product</h2>
-                    <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/orders' : '/orders/' + id}}">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" th:field="*{name}"/><br/>
-
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" th:field="*{email}"/><br/>
-
-                        <label for="gender">Gender:</label>
-                        <input type="text" id="gender" th:field="*{gender}"/><br/>
-
-                        <h2>Products Information</h2>
-
-                        <div th:each="entry : ${products}">
-<!--                            <label th:text="${entry.price}"></label>-->
-<!--                            <input type="text" th:field="*{entry[price]}" /><br/>-->
-                            <div th:object="${product}">
-
-                                <label th:text="${product.price}">productName</label>
-                                <input type="text" th:field="*{product[productName]}" /><br/>
-
-                                <label for="productName">Product Name:</label>
-                                <input type="text" id="productName" th:field="*{product[productName]}"/><br/>
-
-                                <label for="qty">Quantity:</label>
-                                <input type="number" id="qty" th:field="*{product[qty]}"/><br/>
-
-                                <label for="price">Price:</label>
-                                <input type="number" id="price" th:field="*{product[price]}"/><br/>
-                            </div>
-                        </div>
-
-
-
-
-                        <input type="submit" value="Submit"/>
-                    </form>
+                    <div class="py-2">
+                        <a href="/products/create"  class="bg-primary text-white p-3">Create Product</a>
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item: ${data}">
+                            <td th:text="${item.productName}"></td>
+                            <td th:text="${item.price}"></td>
+                            <td th:text="${item.qty}"></td>
+                            <td><a th:href="@{/products/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

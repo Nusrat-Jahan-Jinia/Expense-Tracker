@@ -14,4 +14,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Query("SELECT new com.example.expensetracker.dto.OrderResponse(c.name, c.gender, c.email, c.id, p.productName, p.price, p.qty) FROM Customer c JOIN c.products p")
     public List<OrderResponse> getViewInformation();
+
 }

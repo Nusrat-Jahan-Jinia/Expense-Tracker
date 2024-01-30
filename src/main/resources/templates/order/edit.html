@@ -30,6 +30,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/tags">Tag</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/orders">Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/customers">Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/products">Product</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -53,18 +62,22 @@
 
                         <h2>Products Information</h2>
 
-                        <div th:each="product, productStat : *{products}">
+                        <div th:each="entry : ${products}">
+                            <!--                            <label th:text="${entry.price}"></label>-->
+                            <!--                            <input type="text" th:field="*{entry[price]}" /><br/>-->
                             <div th:object="${product}">
-                                <input type="hidden" th:field="*{products[__${productStat.index}__].pid}"/>
+
+                                <label th:text="${product.price}">productName</label>
+                                <input type="text" th:field="*{product[productName]}" /><br/>
 
                                 <label for="productName">Product Name:</label>
-                                <input type="text" id="productName" th:field="*{products[__${productStat.index}__].productName}"/><br/>
+                                <input type="text" id="productName" th:field="*{product[productName]}"/><br/>
 
-<!--                                <label for="qty">Quantity:</label>-->
-<!--                                <input type="number" id="qty" th:field="*{products[__${productStat.index}__].qty}"/><br/>-->
+                                <label for="qty">Quantity:</label>
+                                <input type="number" id="qty" th:field="*{product[qty]}"/><br/>
 
-<!--                                <label for="price">Price:</label>-->
-<!--                                <input type="number" id="price" th:field="*{products[__${productStat.index}__].price}"/><br/>-->
+                                <label for="price">Price:</label>
+                                <input type="number" id="price" th:field="*{product[price]}"/><br/>
                             </div>
                         </div>
 
