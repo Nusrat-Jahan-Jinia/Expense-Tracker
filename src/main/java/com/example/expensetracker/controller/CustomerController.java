@@ -1,6 +1,7 @@
 package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Customer;
+import com.example.expensetracker.entity.Expense;
 import com.example.expensetracker.entity.Product;
 import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ProductRepository;
@@ -53,17 +54,4 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
-    @GetMapping(value = "/createOrder")
-    public ModelAndView createOrder(){
-        ModelAndView modelAndView = new ModelAndView();
-        List<Customer> customers = customerRepository.findAll();
-        List<Product> products = productRepository.findAll();
-        modelAndView.addObject("dto", new Customer());
-        modelAndView.addObject("customers", customers);
-        modelAndView.addObject("products", products);
-        modelAndView.addObject("method", "post");
-        modelAndView.addObject("method", "post");
-        modelAndView.setViewName("order/create.html");
-        return modelAndView;
-    }
 }

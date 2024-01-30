@@ -17,7 +17,7 @@ public class Customer {
     private String email;
     private String gender;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Product> products;
 
     public Customer() {
@@ -77,7 +77,6 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
-                ", products=" + Arrays.toString(products.toArray()) +
                 '}';
     }
 }
