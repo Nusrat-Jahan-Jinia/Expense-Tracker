@@ -55,9 +55,6 @@
                             <th scope="col">name</th>
                             <th scope="col">Gender</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,14 +62,7 @@
                             <td th:text="${item.name}"></td>
                             <td th:text="${item.gender}"></td>
                             <td th:text="${item.email}"></td>
-                            <td th:each="product: ${item.products}">
-                                <ul>
-                                    <li th:text="${product.productName}"></li>
-                                    <li th:text="${product.price}"></li>
-                                    <li th:text="${product.qty}"></li>
-                                </ul>
-                            </td>
-                            <td><a th:href="@{/orders/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a></td>
+                            <td><a th:href="@{/customers/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a></td>
                         </tr>
                         </tbody>
                     </table>

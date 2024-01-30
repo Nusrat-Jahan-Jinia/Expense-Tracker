@@ -13,16 +13,16 @@ public class Product {
     @GeneratedValue
     private int id;
 
-    private String productName;
+    private String name;
     private int qty;
     private int price;
 
     public Product() {
     }
 
-    public Product(int id, String productName, int qty, int price) {
+    public Product(int id, String name, int qty, int price) {
         this.id = id;
-        this.productName = productName;
+        this.name = name;
         this.qty = qty;
         this.price = price;
     }
@@ -35,12 +35,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getQty() {
@@ -63,7 +63,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", productName='" + productName + '\'' +
+                ", name='" + name + '\'' +
                 ", qty=" + qty +
                 ", price=" + price +
                 '}';

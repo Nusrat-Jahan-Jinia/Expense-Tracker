@@ -48,39 +48,28 @@
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
 
                     <h2>Add Customer and Product</h2>
-                    <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/orders' : '/orders/' + id}}">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" th:field="*{name}"/><br/>
+                    <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/customers' : '/customers/' + id}}">
 
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" th:field="*{email}"/><br/>
-
-                        <label for="gender">Gender:</label>
-                        <input type="text" id="gender" th:field="*{gender}"/><br/>
-
-                        <h2>Products Information</h2>
-
-                        <div th:each="entry : ${products}">
-<!--                            <label th:text="${entry.price}"></label>-->
-<!--                            <input type="text" th:field="*{entry[price]}" /><br/>-->
-                            <div th:object="${product}">
-
-                                <label th:text="${product.price}">productName</label>
-                                <input type="text" th:field="*{product[productName]}" /><br/>
-
-                                <label for="productName">Product Name:</label>
-                                <input type="text" id="productName" th:field="*{product[productName]}"/><br/>
-
-                                <label for="qty">Quantity:</label>
-                                <input type="number" id="qty" th:field="*{product[qty]}"/><br/>
-
-                                <label for="price">Price:</label>
-                                <input type="number" id="price" th:field="*{product[price]}"/><br/>
-                            </div>
+                        <div class="mb-3 d-flex justify-content-between">
+                            <label>Product:</label>
+                            <select id="products" name="products" th:field="*{products}">
+                                <option value="" disabled selected>Select a product</option>
+                                <!-- Add options for categories -->
+                                <th:block th:each="product : ${products}">
+                                    <option th:value="${product.id}" th:text="${product.name}"></option>
+                                </th:block>
+                            </select>
                         </div>
-
-
-
+                        <div class="mb-3 d-flex justify-content-between">
+                            <label>Customer:</label>
+                            <select>
+                                <option value="" disabled selected>Select a customer</option>
+                                <!-- Add options for categories -->
+                                <th:block th:each="customer : ${customers}">
+                                    <option th:value="${customer.id}" th:text="${customer.name}"></option>
+                                </th:block>
+                            </select>
+                        </div>
 
                         <input type="submit" value="Submit"/>
                     </form>

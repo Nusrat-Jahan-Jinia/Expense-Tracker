@@ -47,12 +47,12 @@
             <div class="col-md-12">
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
                     <div class="py-2">
-                        <a href="/orders/create"  class="bg-primary text-white p-3">Create Order</a>
+                        <a href="/customers/createOrder"  class="bg-primary text-white p-3">Create Order</a>
                     </div>
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">name</th>
+                            <th scope="col">Customer Name</th>
                             <th scope="col">Gender</th>
                             <th scope="col">Email</th>
                             <th scope="col">Product Name</th>
@@ -61,19 +61,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="item: ${data}">
-                            <td th:text="${item.name}"></td>
-                            <td th:text="${item.gender}"></td>
-                            <td th:text="${item.email}"></td>
-                            <td th:each="product: ${item.products}">
-                                <ul>
-                                    <li th:text="${product.productName}"></li>
-                                    <li th:text="${product.price}"></li>
-                                    <li th:text="${product.qty}"></li>
-                                </ul>
-                            </td>
-                            <td><a th:href="@{/orders/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a></td>
-                        </tr>
+<!--                        <tr th:each="item: ${data}">-->
+<!--                            <td th:text="${item.name}"></td>-->
+<!--                            <td th:text="${item.gender}"></td>-->
+<!--                            <td th:text="${item.email}"></td>-->
+<!--                            <td th:each="product: ${item.products}">-->
+<!--                                <ul>-->
+<!--                                    <li th:text="${product.productName}"></li>-->
+<!--                                    <li th:text="${product.price}"></li>-->
+<!--                                    <li th:text="${product.qty}"></li>-->
+<!--                                </ul>-->
+<!--                            </td>-->
+<!--                            <td><a th:href="@{/orders/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a></td>-->
+<!--                        </tr>-->
                         </tbody>
                     </table>
                 </div>

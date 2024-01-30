@@ -49,8 +49,8 @@
 
                     <h2>Add Customer Information</h2>
                     <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/products' : '/products/' + id}}">
-                        <label for="productName">productName:</label>
-                        <input type="text" id="productName" th:field="*{productName}"/><br/>
+                        <label for="name">product Name:</label>
+                        <input type="text" id="name" th:field="*{name}"/><br/>
 
                         <label for="price">price:</label>
                         <input type="text" id="price" th:field="*{price}"/><br/>

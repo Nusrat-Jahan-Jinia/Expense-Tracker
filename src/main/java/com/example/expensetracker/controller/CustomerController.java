@@ -1,6 +1,7 @@
 package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Customer;
+import com.example.expensetracker.entity.Product;
 import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ProductRepository;
 import com.example.expensetracker.service.CustomerService;
@@ -13,16 +14,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
 
     private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public CustomerController(CustomerRepository customerRepository) {
+    public CustomerController(CustomerRepository customerRepository, ProductRepository productRepository) {
         this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
 
     @GetMapping("")
@@ -46,5 +51,19 @@ public class CustomerController {
     public String submitCreate(@ModelAttribute("dto")Customer customer, Model model){
         customerRepository.save(customer);
         return "redirect:/customers";
+    }
+
+    @GetMapping(value = "/createOrder")
+    public ModelAndView createOrder(){
+        ModelAndView modelAndView = new ModelAndView();
+        List<Customer> customers = customerRepository.findAll();
+        List<Product> products = productRepository.findAll();
+        modelAndView.addObject("dto", new Customer());
+        modelAndView.addObject("customers", customers);
+        modelAndView.addObject("products", products);
+        modelAndView.addObject("method", "post");
+        modelAndView.addObject("method", "post");
+        modelAndView.setViewName("order/create.html");
+        return modelAndView;
     }
 }
