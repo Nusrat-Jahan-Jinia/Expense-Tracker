@@ -21,6 +21,9 @@ public class CustomerOrder {
     @ManyToMany
     private Set<Product> products = new HashSet<>();
 
+    @Transient
+    private int orderId;
+
     public CustomerOrder() {
     }
 
