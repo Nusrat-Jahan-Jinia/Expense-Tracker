@@ -2,11 +2,15 @@ package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.entity.Tag;
+import com.example.expensetracker.service.CategoryService;
+import com.example.expensetracker.service.ExpenseService;
 import com.example.expensetracker.service.IncomeService;
 import com.example.expensetracker.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,11 +20,14 @@ import java.util.List;
 @RequestMapping("/incomes")
 public class IncomeController {
 
-    @Autowired
-    private IncomeService incomeService;
+    private final IncomeService incomeService;
+    private final TagService tagService;
 
     @Autowired
-    private TagService tagService;
+    public IncomeController(IncomeService incomeService, TagService tagService){
+        this.incomeService = incomeService;
+        this.tagService = tagService;
+    }
 
     @GetMapping("")
     public ModelAndView home(){
@@ -41,7 +48,12 @@ public class IncomeController {
         return modelAndView;
     }
     @PostMapping(value = "")
-    public String submitCreate(@ModelAttribute("dto") Income income, Model model){
+    public String submitCreate(@Validated @ModelAttribute("income") Income income, Model model, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            // Handle validation errors, e.g., return to the form page with error messages
+            return "income/create.html";
+        }
+
         boolean success = incomeService.save(income);
 
         if(!success){

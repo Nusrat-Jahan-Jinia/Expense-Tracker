@@ -1,6 +1,7 @@
 package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Expense;
+import com.example.expensetracker.repository.ProductRepository;
 import com.example.expensetracker.service.ExpenseService;
 import com.example.expensetracker.service.HomeService;
 import com.example.expensetracker.service.IncomeService;
@@ -19,24 +20,22 @@ import java.util.List;
 @Controller
 @RequestMapping("")
 public class HomeController {
-    @Autowired
-    private ExpenseService expenseService;
+    private final ExpenseService expenseService;
+    private final IncomeService incomeService;
+    private final HomeService homeService;
 
     @Autowired
-    private IncomeService incomeService;
-
-    @Autowired
-    private HomeService homeService;
+    public HomeController(ExpenseService expenseService, IncomeService incomeService, HomeService homeService) {
+        this.expenseService = expenseService;
+        this.incomeService = incomeService;
+        this.homeService = homeService;
+    }
 
     @GetMapping("")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
-
-        // count last month and current date
         String today = Utils.getToday();
         String lastMonth = Utils.getLastMonth();
-
-        // count current expense and income and savings
         double totalExpense = homeService.getTotalExpenseAfterLastMonth();
         double totalIncome = homeService.getTotalIncomeAfterLastMonth();
         double totalSavings = homeService.getTotalSavingsAfterLastMonth();

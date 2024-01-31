@@ -1,5 +1,6 @@
 package com.example.expensetracker.service;
 
+import com.example.expensetracker.repository.ProductRepository;
 import com.example.expensetracker.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,12 +9,14 @@ import java.time.LocalDate;
 
 @Service
 public class HomeService {
-    @Autowired
-    private ExpenseService expenseService;
+    private final ExpenseService expenseService;
+    private final IncomeService incomeService;
 
     @Autowired
-    private IncomeService incomeService;
-
+    public HomeService(ExpenseService expenseService, IncomeService incomeService) {
+        this.expenseService = expenseService;
+        this.incomeService = incomeService;
+    }
 
     public double getTotalExpenseAfterLastMonth() {
         double totalExpense = expenseService.getTotalAmountAfterLastMonth();

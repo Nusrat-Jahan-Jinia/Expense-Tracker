@@ -3,6 +3,7 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Tag;
 import com.example.expensetracker.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/tags")
 public class TagController {
 
-    @Autowired
-    private TagService tagService;
+    private final TagService tagService;
 
+    @Autowired
+    public TagController(TagService tagService){
+        this.tagService = tagService;
+    }
     @GetMapping("")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
@@ -37,7 +41,7 @@ public class TagController {
     }
 
     @PostMapping(value = "")
-    public String submitCreate(@ModelAttribute("dto") Tag tag, Model model){
+    public String submitCreate(Tag tag, Model model){
         boolean success = tagService.save(tag);
 
         if(!success){

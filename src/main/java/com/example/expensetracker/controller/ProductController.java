@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductController {
     private final ProductRepository productRepository;
 
+    @Autowired
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -42,7 +43,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "")
-    public String submitCreate(@ModelAttribute("dto")Product product, Model model){
+    public String submitCreate(Product product, Model model){
         productRepository.save(product);
         return "redirect:/products";
     }

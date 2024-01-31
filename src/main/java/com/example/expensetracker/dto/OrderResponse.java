@@ -10,7 +10,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class OrderResponse {
-
     private String name;
     private String email;
     private String gender;

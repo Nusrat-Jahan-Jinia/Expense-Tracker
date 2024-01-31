@@ -1,6 +1,8 @@
 package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.SystemMessage;
+import com.example.expensetracker.service.IncomeService;
+import com.example.expensetracker.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PublishController {
 
+    private final JmsTemplate jmsTemplate;
+
     @Autowired
-    private JmsTemplate jmsTemplate;
+    public PublishController(JmsTemplate jmsTemplate){
+        this.jmsTemplate = jmsTemplate;
+    }
 
     @PostMapping("/publishMessage")
     public ResponseEntity<String> publishMessage(@RequestBody SystemMessage systemMessage){

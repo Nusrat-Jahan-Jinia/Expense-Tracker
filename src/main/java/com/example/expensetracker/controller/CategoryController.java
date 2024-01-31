@@ -5,6 +5,7 @@ import com.example.expensetracker.repository.CategoryRepository;
 import com.example.expensetracker.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,15 +18,17 @@ import org.springframework.ui.Model;
 @RequestMapping("/categories")
 public class CategoryController {
 
+    private final CategoryService categoryService;
+
     @Autowired
-    private CategoryService categoryService;
+    public CategoryController(CategoryService categoryService){
+       this.categoryService = categoryService;
+    }
 
     @GetMapping("")
     public ModelAndView home(){
       ModelAndView modelAndView = new ModelAndView();
-      //adding data to the model
       modelAndView.addObject("data", categoryService.getCategories());
-      //setting the logical view name
       modelAndView.setViewName("category/list.html");
       return modelAndView;
     }
@@ -40,7 +43,7 @@ public class CategoryController {
     }
 
     @PostMapping(value = "")
-    public String submitCreate(@ModelAttribute("dto") Category category, Model model){
+    public String submitCreate(Category category, Model model){
         boolean success = categoryService.save(category);
 
         if(!success){

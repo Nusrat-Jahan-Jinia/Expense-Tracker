@@ -7,6 +7,8 @@ import com.example.expensetracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,11 +18,14 @@ import java.util.List;
 @RequestMapping("/expenses")
 public class ExpenseController {
 
-    @Autowired
-    private ExpenseService expenseService;
+    private final ExpenseService expenseService;
+    private final CategoryService categoryService;
 
     @Autowired
-    private CategoryService categoryService;
+    public ExpenseController(ExpenseService expenseService, CategoryService categoryService){
+        this.expenseService = expenseService;
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("")
     public ModelAndView home(){
@@ -42,9 +47,15 @@ public class ExpenseController {
     }
 
     @PostMapping(value = "")
-    public String submitCreate(@ModelAttribute("dto") Expense expense, Model model){
+    public String submitCreate(@Validated @ModelAttribute("expense") Expense expense, Model model, BindingResult bindingResult){
+        // frontend error show
+        if (bindingResult.hasErrors()) {
+            return "expense/create.html";
+        }
+
         boolean success = expenseService.save(expense);
 
+        // backend error handle
         if(!success){
             model.addAttribute("result", "Something went wrong!");
         }else{

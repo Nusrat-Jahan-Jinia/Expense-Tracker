@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
+    private final CustomerRepository customerRepository;
+
     @Autowired
-    private CustomerRepository customerRepository;
+    public CustomerService(CustomerRepository customerRepository){
+        this.customerRepository = customerRepository;
+    }
     public boolean save(Customer customer) throws DataAccessException {
         customerRepository.save(customer);
         return true;

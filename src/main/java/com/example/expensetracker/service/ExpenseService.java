@@ -1,6 +1,7 @@
 package com.example.expensetracker.service;
 
 import com.example.expensetracker.entity.Expense;
+import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,8 +15,13 @@ import java.time.temporal.TemporalAdjusters;
 
 @Service
 public class ExpenseService {
+
+    private final ExpenseRepository expenseRepository;
+
     @Autowired
-    private ExpenseRepository expenseRepository;
+    public ExpenseService(ExpenseRepository expenseRepository){
+        this.expenseRepository = expenseRepository;
+    }
 
     public List<Expense> getExpenses(){
         return (List<Expense>) expenseRepository.findAll();
@@ -52,11 +58,7 @@ public class ExpenseService {
     public double getTotalAmountAfterLastMonth() {
         LocalDate today = LocalDate.now();
         LocalDate lastMonthEndDate = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
-
-        // Retrieve expenses after last month
         List<Expense> expensesAfterLastMonth = expenseRepository.findByDateAfter(lastMonthEndDate);
-
-        // Calculate total amount
         return expensesAfterLastMonth.stream().mapToDouble(Expense::getAmount).sum();
     }
 }
