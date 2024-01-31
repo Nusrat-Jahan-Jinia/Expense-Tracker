@@ -1,6 +1,7 @@
 package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.*;
+import com.example.expensetracker.exception.CustomerOrderUpdateException;
 import com.example.expensetracker.repository.CustomerOrderRepository;
 import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ProductRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -58,14 +60,24 @@ public class CustomerOrderController {
     }
 
     @PostMapping(value = "")
-    public String submitCreate(CustomerOrder customerOrder, Model model){
-        customerOrderRepository.save(customerOrder);
-        return "redirect:/orders";
-    }
+    public String submitForm(@RequestParam(name = "orderId", required = false) Integer orderId,
+                             CustomerOrder customerOrder,
+                             RedirectAttributes redirectAttributes) {
 
-    @GetMapping("/delete/{id}")
-    public String deleteEntity(@PathVariable int id) {
-        customerOrderRepository.deleteById(id);
+        // Update existing order
+        if (orderId != null) {
+            try {
+                orderService.edit(customerOrder, orderId);
+                redirectAttributes.addFlashAttribute("successMessage", "Order updated successfully!");
+            } catch (CustomerOrderUpdateException e) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Failed to update order!");
+            }
+        } else {
+            // Create new order
+            customerOrderRepository.save(customerOrder);
+            redirectAttributes.addFlashAttribute("successMessage", "Order created successfully!");
+        }
+
         return "redirect:/orders";
     }
 
@@ -75,6 +87,7 @@ public class CustomerOrderController {
         List<Customer> customers = customerRepository.findAll();
         List<Product> products = productRepository.findAll();
         modelAndView.addObject("id", id);
+        modelAndView.addObject("orderId", id);
         modelAndView.addObject("dto", orderService.getOrderById(id));
 
         modelAndView.addObject("customers", customers);
@@ -84,17 +97,23 @@ public class CustomerOrderController {
         return modelAndView;
     }
 
-    @PutMapping(value = "/{id}")
-    public ModelAndView submitUpdate(@PathVariable("id") int id, CustomerOrder customerOrder, Model model) {
-        ModelAndView modelAndView = new ModelAndView();
-        boolean success = orderService.edit(customerOrder, id);
-        if (!success) {
-            model.addAttribute("result", "Something went wrong!");
-        } else {
-            model.addAttribute("result", "Successfully data updated!");
-        }
-        modelAndView.setViewName("order/list.html");
-        return modelAndView;
+    @GetMapping("/delete/{id}")
+    public String deleteEntity(@PathVariable int id) {
+        customerOrderRepository.deleteById(id);
+        return "redirect:/orders";
     }
+
+//    @PutMapping(value = "/{id}")
+//    public ModelAndView submitUpdate(@PathVariable("id") int customerOrderId, CustomerOrder customerOrder, Model model) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        boolean success = orderService.edit(customerOrder, customerOrderId);
+//        if (!success) {
+//            model.addAttribute("result", "Something went wrong!");
+//        } else {
+//            model.addAttribute("result", "Successfully data updated!");
+//        }
+//        modelAndView.setViewName("order/list.html");
+//        return modelAndView;
+//    }
 
 }
