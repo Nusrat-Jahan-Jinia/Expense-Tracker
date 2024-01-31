@@ -19,16 +19,18 @@ import org.springframework.ui.Model;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryController(CategoryService categoryService){
-       this.categoryService = categoryService;
+    public CategoryController(CategoryService categoryService, CategoryRepository categoryRepository){
+        this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("")
     public ModelAndView home(){
       ModelAndView modelAndView = new ModelAndView();
-      modelAndView.addObject("data", categoryService.getCategories());
+      modelAndView.addObject("data", categoryRepository.findAll());
       modelAndView.setViewName("category/list.html");
       return modelAndView;
     }

@@ -2,6 +2,7 @@ package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.entity.Expense;
+import com.example.expensetracker.repository.CategoryRepository;
 import com.example.expensetracker.service.CategoryService;
 import com.example.expensetracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,19 @@ public class ExpenseController {
 
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ExpenseController(ExpenseService expenseService, CategoryService categoryService){
+    public ExpenseController(ExpenseService expenseService, CategoryService categoryService,CategoryRepository categoryRepository){
         this.expenseService = expenseService;
         this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", expenseService.getExpenses());
+        modelAndView.addObject("data", categoryRepository.findAll());
         modelAndView.setViewName("expense/list.html");
         return modelAndView;
     }

@@ -2,6 +2,7 @@ package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.entity.Tag;
+import com.example.expensetracker.repository.IncomeRepository;
 import com.example.expensetracker.service.CategoryService;
 import com.example.expensetracker.service.ExpenseService;
 import com.example.expensetracker.service.IncomeService;
@@ -22,17 +23,19 @@ public class IncomeController {
 
     private final IncomeService incomeService;
     private final TagService tagService;
+    private final IncomeRepository incomeRepository;
 
     @Autowired
-    public IncomeController(IncomeService incomeService, TagService tagService){
+    public IncomeController(IncomeService incomeService, TagService tagService,IncomeRepository incomeRepository){
         this.incomeService = incomeService;
         this.tagService = tagService;
+        this.incomeRepository = incomeRepository;
     }
 
     @GetMapping("")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", incomeService.getIncomes());
+        modelAndView.addObject("data", incomeRepository.findAll());
         modelAndView.setViewName("income/list.html");
         return modelAndView;
     }

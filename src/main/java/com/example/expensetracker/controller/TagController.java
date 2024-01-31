@@ -1,6 +1,7 @@
 package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Tag;
+import com.example.expensetracker.repository.TagRepository;
 import com.example.expensetracker.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
@@ -17,17 +18,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class TagController {
 
     private final TagService tagService;
+    private final TagRepository tagRepository;
 
     @Autowired
-    public TagController(TagService tagService){
+    public TagController(TagService tagService, TagRepository tagRepository){
+
         this.tagService = tagService;
+        this.tagRepository = tagRepository;
     }
     @GetMapping("")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", tagService.getTags());
-
-//        System.out.println("here" + tagService.getTags());
+        modelAndView.addObject("data", tagRepository.findAll());
         modelAndView.setViewName("tag/list.html");
         return modelAndView;
     }
