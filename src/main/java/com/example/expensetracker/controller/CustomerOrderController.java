@@ -31,6 +31,7 @@ public class CustomerOrderController {
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("data", customerOrderRepository.findAll());
+        System.out.println(customerOrderRepository.findAll());
         modelAndView.setViewName("order/list.html");
         return modelAndView;
     }
@@ -49,9 +50,9 @@ public class CustomerOrderController {
     }
 
     @PostMapping(value = "")
-    public String submitCreate(@RequestParam("productIds") List<Integer> selectedProductIds,CustomerOrder customerOrder, Model model){
+    public String submitCreate(CustomerOrder customerOrder, Model model){
         customerOrderRepository.save(customerOrder);
-        System.out.println("Selected Product IDs: " + selectedProductIds);
+
         return "redirect:/orders";
     }
 

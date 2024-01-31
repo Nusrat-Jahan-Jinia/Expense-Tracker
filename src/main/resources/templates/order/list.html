@@ -72,7 +72,7 @@
                                 </ul>
                             </td>
                             <td>
-                                <ul th:each="orderProduct: ${item.product}">
+                                <ul th:each="orderProduct: ${item.products}">
                                     <li th:text="${orderProduct.name}"></li>
                                     <li th:text="${orderProduct.price}"></li>
                                     <li th:text="${orderProduct.qty}"></li>

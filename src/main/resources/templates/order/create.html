@@ -73,9 +73,10 @@
 
                         <label>Product:</label>
 
+
                         <div th:each="product : ${products}">
-                            <input type="checkbox" id="product" th:id="'product_' + ${product.id}"
-                                   th:name="productIds"
+                            <input type="checkbox" th:id="'product_' + ${product.id}"
+                                   th:name="'products'"
                                    th:value="${product.id}" />
                             <label th:for="'product_' + ${product.id}" th:text="${product.name}"></label><br/>
                         </div>

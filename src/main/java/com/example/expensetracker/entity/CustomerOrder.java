@@ -19,17 +19,17 @@ public class CustomerOrder {
     private Customer customer;
 
     @ManyToMany
-    private List<Product> product;
+    private Set<Product> products = new HashSet<>();
 
     public CustomerOrder() {
     }
 
-    public CustomerOrder(int id, String orderBy, String orderDate, Customer customer, List<Product> product) {
+    public CustomerOrder(int id, String orderBy, String orderDate, Customer customer, Set<Product> products) {
         this.id = id;
         this.orderBy = orderBy;
         this.orderDate = orderDate;
         this.customer = customer;
-        this.product = product;
+        this.products = products;
     }
 
     public int getId() {
@@ -56,12 +56,12 @@ public class CustomerOrder {
         this.orderDate = orderDate;
     }
 
-    public List<Product> getProduct() {
-        return product;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public void setProduct(List<Product> product) {
-        this.product = product;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     public Customer getCustomer() {
@@ -78,8 +78,8 @@ public class CustomerOrder {
                 "id=" + id +
                 ", orderBy='" + orderBy + '\'' +
                 ", orderDate='" + orderDate + '\'' +
-                ", product=" + product +
                 ", customer=" + customer +
+                ", products=" + products +
                 '}';
     }
 }
