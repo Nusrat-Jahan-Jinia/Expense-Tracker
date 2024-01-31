@@ -78,6 +78,10 @@
                                     <li th:text="${orderProduct.qty}"></li>
                                 </ul>
                             </td>
+                            <td>
+                                <a th:href="@{/orders/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a>
+                                <a th:href="@{'/orders/delete/' + ${item.id}}" type="button" class="btn bg-danger text-white">Delete</a>
+                            </td>
                         </tbody>
                     </table>
                 </div>

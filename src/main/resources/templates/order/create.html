@@ -72,8 +72,6 @@
                         </select><br/>
 
                         <label>Product:</label>
-
-
                         <div th:each="product : ${products}">
                             <input type="checkbox" th:id="'product_' + ${product.id}"
                                    th:name="'products'"
