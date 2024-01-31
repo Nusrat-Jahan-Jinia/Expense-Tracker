@@ -13,7 +13,6 @@ public class Income {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(insertable = false, updatable = false)
     private Integer id;
 
     @Column(name = "source")

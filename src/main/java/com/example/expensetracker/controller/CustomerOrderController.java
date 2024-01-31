@@ -52,7 +52,6 @@ public class CustomerOrderController {
     @PostMapping(value = "")
     public String submitCreate(CustomerOrder customerOrder, Model model){
         customerOrderRepository.save(customerOrder);
-
         return "redirect:/orders";
     }
 

@@ -27,17 +27,6 @@ public class Expense {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-//    @Column(name="created_at", nullable = false)
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @CreationTimestamp
-//    @JsonIgnore
-//    private LocalDateTime createdAt;
-//
-//    @Column(name = "updated_at", nullable = false)
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @CreationTimestamp
-//    @JsonIgnore
-//    private LocalDateTime updatedAt;
 
     public Expense() {
     }
@@ -48,16 +37,12 @@ public class Expense {
             Double amount,
             LocalDate date,
             Category category
-//            LocalDateTime createdAt,
-//            LocalDateTime updatedAt
     ) {
         this.id = id;
         this.title = title;
         this.date = date;
         this.amount = amount;
         this.category = category;
-//        this.createdAt = createdAt;
-//        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {
@@ -100,21 +85,6 @@ public class Expense {
         this.category = category;
     }
 
-//    public LocalDateTime getCreatedAt() {
-//        return createdAt;
-//    }
-//
-//    public void setCreatedAt(LocalDateTime createdAt) {
-//        this.createdAt = createdAt;
-//    }
-//
-//    public LocalDateTime getUpdatedAt() {
-//        return updatedAt;
-//    }
-//
-//    public void setUpdatedAt(LocalDateTime updatedAt) {
-//        this.updatedAt = updatedAt;
-//    }
 
     @Override
     public String toString() {
