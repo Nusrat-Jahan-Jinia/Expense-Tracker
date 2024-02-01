@@ -23,7 +23,6 @@ public class IncomeController {
     private final TagService tagService;
     private final IncomeRepository incomeRepository;
 
-    @Autowired
     public IncomeController(IncomeService incomeService, TagService tagService,IncomeRepository incomeRepository){
         this.incomeService = incomeService;
         this.tagService = tagService;

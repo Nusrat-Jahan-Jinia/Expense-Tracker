@@ -23,7 +23,6 @@ public class CustomerOrderController {
     private final CustomerOrderRepository customerOrderRepository;
     private final OrderService orderService;
 
-    @Autowired
     public CustomerOrderController(
             CustomerRepository customerRepository,
             ProductRepository productRepository,

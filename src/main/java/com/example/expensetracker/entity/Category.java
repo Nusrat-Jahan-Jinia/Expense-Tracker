@@ -14,16 +14,11 @@ public class Category {
 
     private String title;
 
-    @Column(name="created_at", nullable = false)
+
     @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    @JsonIgnore
     private LocalDateTime createdAt;
 
-    @Column(name="updated_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    @JsonIgnore
     private LocalDateTime updatedAt;
 
     public Category() {

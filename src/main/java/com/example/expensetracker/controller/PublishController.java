@@ -14,7 +14,6 @@ public class PublishController {
 
     private final JmsTemplate jmsTemplate;
 
-    @Autowired
     public PublishController(JmsTemplate jmsTemplate){
         this.jmsTemplate = jmsTemplate;
     }

@@ -23,7 +23,6 @@ public class ExpenseController {
     private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
 
-    @Autowired
     public ExpenseController(ExpenseService expenseService, CategoryService categoryService,CategoryRepository categoryRepository){
         this.expenseService = expenseService;
         this.categoryService = categoryService;

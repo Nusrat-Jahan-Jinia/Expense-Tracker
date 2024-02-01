@@ -10,16 +10,13 @@ public class Income {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "source")
     private String source;
 
-    @Column(name = "amount")
     private Double amount;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Tag tag;
 
-    @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private LocalDate date;
 

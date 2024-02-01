@@ -20,7 +20,6 @@ public class CustomerController {
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
 
-    @Autowired
     public CustomerController(CustomerRepository customerRepository, ProductRepository productRepository) {
         this.customerRepository = customerRepository;
         this.productRepository = productRepository;

@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductController {
     private final ProductRepository productRepository;
 
-    @Autowired
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }

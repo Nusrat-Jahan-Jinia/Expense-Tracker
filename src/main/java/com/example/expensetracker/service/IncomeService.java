@@ -12,8 +12,6 @@ import java.util.List;
 @Service
 public class IncomeService {
     private final IncomeRepository incomeRepository;
-
-    @Autowired
     public IncomeService(IncomeRepository incomeRepository){
         this.incomeRepository = incomeRepository;
     }

@@ -18,9 +18,7 @@ public class TagController {
     private final TagService tagService;
     private final TagRepository tagRepository;
 
-    @Autowired
     public TagController(TagService tagService, TagRepository tagRepository){
-
         this.tagService = tagService;
         this.tagRepository = tagRepository;
     }

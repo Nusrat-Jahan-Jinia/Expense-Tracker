@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 public class HomeService {
     private final ExpenseService expenseService;
     private final IncomeService incomeService;
-
-    @Autowired
     public HomeService(ExpenseService expenseService, IncomeService incomeService) {
         this.expenseService = expenseService;
         this.incomeService = incomeService;

@@ -18,7 +18,6 @@ public class HomeController {
     private final IncomeService incomeService;
     private final HomeService homeService;
 
-    @Autowired
     public HomeController(ExpenseService expenseService, IncomeService incomeService, HomeService homeService) {
         this.expenseService = expenseService;
         this.incomeService = incomeService;
