@@ -9,17 +9,12 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String title;
-
     private double amount;
-
     @Temporal(TemporalType.DATE)
     private LocalDate date;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
-
 
     public Expense() {
     }

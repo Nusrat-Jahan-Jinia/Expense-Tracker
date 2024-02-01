@@ -11,9 +11,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String title;
-
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;

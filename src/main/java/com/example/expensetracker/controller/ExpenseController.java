@@ -3,6 +3,7 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.entity.Expense;
 import com.example.expensetracker.repository.CategoryRepository;
+import com.example.expensetracker.repository.ExpenseRepository;
 import com.example.expensetracker.service.CategoryService;
 import com.example.expensetracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/expenses")
 public class ExpenseController {
-
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
@@ -32,7 +32,7 @@ public class ExpenseController {
     @GetMapping("")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", categoryRepository.findAll());
+        modelAndView.addObject("data", expenseService.getExpenses());
         modelAndView.setViewName("expense/list.html");
         return modelAndView;
     }
