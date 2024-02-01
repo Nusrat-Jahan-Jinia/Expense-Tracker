@@ -1,8 +1,6 @@
 package com.example.expensetracker.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,15 +8,11 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String title;
-
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
-
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
-
     public Tag() {
     }
 

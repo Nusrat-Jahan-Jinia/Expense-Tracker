@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 @Entity
 public class Expense {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -15,7 +14,6 @@ public class Expense {
     private LocalDate date;
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
-
     public Expense() {
     }
 

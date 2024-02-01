@@ -59,10 +59,7 @@
                             <label for="category">Category:</label>
                             <select id="category" name="category" th:field="*{category}" required>
                                 <option value="" disabled selected>Select a category</option>
-                                <!-- Add options for categories -->
-                                <th:block th:each="category : ${categories}">
-                                    <option th:value="${category.id}" th:text="${category.title}"></option>
-                                </th:block>
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
                             </select>
                         </div>
 

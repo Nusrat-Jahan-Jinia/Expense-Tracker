@@ -57,10 +57,7 @@
                             <label for="tag">Tag:</label>
                             <select id="tag" name="tag" th:field="*{tag}" required>
                                 <option value="" disabled selected>Select a category</option>
-                                <!-- Add options for categories -->
-                                <th:block th:each="tag : ${tags}">
-                                    <option th:value="${tag.id}" th:text="${tag.title}"></option>
-                                </th:block>
+                                <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.title}"></option>
                             </select>
                         </div>
 

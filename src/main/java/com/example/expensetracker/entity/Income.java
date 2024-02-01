@@ -9,17 +9,12 @@ public class Income {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String source;
-
     private Double amount;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Tag tag;
-
     @Temporal(TemporalType.DATE)
     private LocalDate date;
-
     public Income() {
     }
 

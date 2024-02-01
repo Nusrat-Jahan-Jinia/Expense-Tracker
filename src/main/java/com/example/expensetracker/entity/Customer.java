@@ -1,6 +1,5 @@
 package com.example.expensetracker.entity;
 
-
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -13,10 +12,8 @@ public class Customer {
     private String name;
     private String email;
     private String gender;
-
     @OneToMany
     private List<Product> products;
-
     public Customer() {
     }
 
