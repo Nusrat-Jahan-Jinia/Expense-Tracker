@@ -2,7 +2,6 @@ package com.example.expensetracker.service;
 
 import com.example.expensetracker.entity.CustomerOrder;
 import com.example.expensetracker.exception.CustomerOrderUpdateException;
-import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.repository.CustomerOrderRepository;
 import org.springframework.stereotype.Service;
 

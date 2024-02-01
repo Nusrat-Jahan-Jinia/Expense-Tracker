@@ -3,8 +3,6 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.entity.Tag;
 import com.example.expensetracker.repository.IncomeRepository;
-import com.example.expensetracker.service.CategoryService;
-import com.example.expensetracker.service.ExpenseService;
 import com.example.expensetracker.service.IncomeService;
 import com.example.expensetracker.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;

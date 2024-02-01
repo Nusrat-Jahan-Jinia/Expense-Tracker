@@ -1,7 +1,5 @@
 package com.example.expensetracker.controller;
 
-import com.example.expensetracker.entity.Expense;
-import com.example.expensetracker.repository.ProductRepository;
 import com.example.expensetracker.service.ExpenseService;
 import com.example.expensetracker.service.HomeService;
 import com.example.expensetracker.service.IncomeService;
@@ -12,10 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
 @RequestMapping("")

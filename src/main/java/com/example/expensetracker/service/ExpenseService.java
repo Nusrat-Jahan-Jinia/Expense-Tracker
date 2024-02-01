@@ -1,14 +1,10 @@
 package com.example.expensetracker.service;
 
 import com.example.expensetracker.entity.Expense;
-import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;

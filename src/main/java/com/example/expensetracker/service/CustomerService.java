@@ -1,7 +1,6 @@
 package com.example.expensetracker.service;
 
 import com.example.expensetracker.entity.Customer;
-import com.example.expensetracker.entity.Expense;
 import com.example.expensetracker.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
