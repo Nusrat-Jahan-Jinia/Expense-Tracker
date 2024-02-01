@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class CustomerOrder {
+public class ProductOrder {
     @Id
     @GeneratedValue
     private int id;
@@ -21,10 +21,10 @@ public class CustomerOrder {
     @Transient
     private int orderId;
 
-    public CustomerOrder() {
+    public ProductOrder() {
     }
 
-    public CustomerOrder(int id, String orderBy, String orderDate, Customer customer, Set<Product> products) {
+    public ProductOrder(int id, String orderBy, String orderDate, Customer customer, Set<Product> products) {
         this.id = id;
         this.orderBy = orderBy;
         this.orderDate = orderDate;
