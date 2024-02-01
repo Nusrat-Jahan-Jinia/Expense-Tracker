@@ -34,9 +34,7 @@ public class ExpenseService {
         }
     }
     public boolean edit(Expense expense, int id) {
-
         try {
-            expense.setId(id);
             expenseRepository.save(expense);
             return true;
         } catch (Exception exception) {

@@ -18,7 +18,13 @@ public class Income {
     public Income() {
     }
 
-    public Income(Integer id, String source, Double amount, Tag tag, LocalDate date) {
+    public Income(
+            Integer id,
+            String source,
+            Double amount,
+            Tag tag,
+            LocalDate date
+    ) {
         this.id = id;
         this.source = source;
         this.amount = amount;
