@@ -78,7 +78,7 @@ public class IncomeController {
     @PutMapping(value = "/{id}")
     public ModelAndView submitUpdate(@PathVariable("id") int id, Income income, Model model) {
         ModelAndView modelAndView = new ModelAndView();
-        boolean success = incomeService.edit(income, id);
+        boolean success = incomeService.edit(income);
         if (!success) {
             model.addAttribute("result", "Something went wrong!");
         } else {

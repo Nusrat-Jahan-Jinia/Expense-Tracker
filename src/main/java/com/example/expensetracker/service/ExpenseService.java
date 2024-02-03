@@ -1,10 +1,13 @@
 package com.example.expensetracker.service;
 
 import com.example.expensetracker.entity.Expense;
+import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -33,23 +36,29 @@ public class ExpenseService {
             expenseRepository.save(expense);
         }
     }
-    public boolean edit(Expense expense, int id) {
-        try {
-            expenseRepository.save(expense);
-            return true;
-        } catch (Exception exception) {
-            return false;
-        }
+    public boolean edit(Expense expense) {
+        expenseRepository.save(expense);
+        return true;
     }
 
     public void deleteById(int id) {
         expenseRepository.deleteById(id);
     }
 
-    public double getTotalAmountAfterLastMonth() {
+    public BigDecimal getTotalAmountAfterLastMonth() {
         LocalDate today = LocalDate.now();
         LocalDate lastMonthEndDate = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
         List<Expense> expensesAfterLastMonth = expenseRepository.findByDateAfter(lastMonthEndDate);
-        return expensesAfterLastMonth.stream().mapToDouble(Expense::getAmount).sum();
+        // Initialize BigDecimal sum to zero
+        BigDecimal totalExpense = BigDecimal.ZERO;
+
+        // Iterate through incomesAfterLastMonth and sum amounts
+        for (Expense expense : expensesAfterLastMonth) {
+            BigDecimal amount = expense.getAmount();
+            totalExpense = totalExpense.add(amount);
+        }
+        return totalExpense;
     }
+
+
 }

@@ -30,11 +30,9 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView();
         String today = Utils.getToday();
         String lastMonth = Utils.getLastMonth();
-        double totalExpense = homeService.getTotalExpenseAfterLastMonth();
-        double totalIncome = homeService.getTotalIncomeAfterLastMonth();
-
-
-        double totalSavings = homeService.getTotalSavingsAfterLastMonth();
+        BigDecimal totalExpense = homeService.getTotalExpenseAfterLastMonth();
+        BigDecimal totalIncome = homeService.getTotalIncomeAfterLastMonth();
+        BigDecimal totalSavings = homeService.getTotalSavingsAfterLastMonth();
 
         modelAndView.addObject("totalExpense", totalExpense);
         modelAndView.addObject("totalIncome", totalIncome);

@@ -3,6 +3,8 @@ package com.example.expensetracker.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class HomeService {
     private final ExpenseService expenseService;
@@ -12,18 +14,18 @@ public class HomeService {
         this.incomeService = incomeService;
     }
 
-    public double getTotalExpenseAfterLastMonth() {
-        double totalExpense = expenseService.getTotalAmountAfterLastMonth();
+    public BigDecimal getTotalExpenseAfterLastMonth() {
+        BigDecimal totalExpense = expenseService.getTotalAmountAfterLastMonth();
         return totalExpense;
     }
-    public double getTotalIncomeAfterLastMonth() {
-        double totalIncome = incomeService.getTotalAmountAfterLastMonth();
+    public BigDecimal getTotalIncomeAfterLastMonth() {
+        BigDecimal totalIncome = incomeService.getTotalAmountAfterLastMonth();
         return totalIncome;
     }
-    public double getTotalSavingsAfterLastMonth() {
-        double totalExpense = expenseService.getTotalAmountAfterLastMonth();
-        double totalIncome = incomeService.getTotalAmountAfterLastMonth();
-        double totalSavings = totalIncome - totalExpense;
+    public BigDecimal getTotalSavingsAfterLastMonth() {
+        BigDecimal totalExpense = expenseService.getTotalAmountAfterLastMonth();
+        BigDecimal totalIncome = incomeService.getTotalAmountAfterLastMonth();
+        BigDecimal totalSavings = totalIncome.subtract(totalExpense);
         return totalSavings;
     }
 }

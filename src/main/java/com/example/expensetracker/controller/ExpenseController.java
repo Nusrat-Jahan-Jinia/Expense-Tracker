@@ -81,7 +81,7 @@ public class ExpenseController {
     @PutMapping(value = "/{id}")
     public ModelAndView submitUpdate(@PathVariable("id") int id, Expense expense, Model model) {
         ModelAndView modelAndView = new ModelAndView();
-        boolean success = expenseService.edit(expense, id);
+        boolean success = expenseService.edit(expense);
         if (!success) {
             model.addAttribute("result", "Something went wrong!");
         } else {

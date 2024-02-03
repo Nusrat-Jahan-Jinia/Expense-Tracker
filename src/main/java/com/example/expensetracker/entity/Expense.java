@@ -2,6 +2,7 @@ package com.example.expensetracker.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.math.BigDecimal;
 
 @Entity
 public class Expense {
@@ -9,7 +10,7 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
-    private double amount;
+    private BigDecimal amount;
     @Temporal(TemporalType.DATE)
     private LocalDate date;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -20,7 +21,7 @@ public class Expense {
     public Expense(
             Integer id,
             String title,
-            Double amount,
+            BigDecimal amount,
             LocalDate date,
             Category category
     ) {
@@ -55,11 +56,11 @@ public class Expense {
         this.date = date;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
