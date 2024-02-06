@@ -28,19 +28,4 @@ public class ProductOrderService {
         return productOrderRepository.findById(id);
     }
 
-//    public void edit(ProductOrder updatedCustomerOrder, int id) {
-//        Optional<ProductOrder> existingOrderOptional = productOrderRepository.findById(id);
-//
-//        if (existingOrderOptional.isPresent()) {
-//            ProductOrder existingOrder = existingOrderOptional.get();
-//            existingOrder.setOrderBy(updatedCustomerOrder.getOrderBy());
-//            existingOrder.setOrderDate(updatedCustomerOrder.getOrderDate());
-//            existingOrder.setCustomer(updatedCustomerOrder.getCustomer());
-//            existingOrder.setProducts(updatedCustomerOrder.getProducts());
-//
-//            productOrderRepository.save(existingOrder);
-//        } else {
-//            throw new CustomerOrderUpdateException("Customer order with id " + id + " not found");
-//        }
-//    }
 }

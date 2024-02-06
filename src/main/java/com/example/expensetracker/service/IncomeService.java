@@ -1,9 +1,7 @@
 package com.example.expensetracker.service;
 
-import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.repository.IncomeRepository;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -35,10 +33,8 @@ public class IncomeService {
         LocalDate today = LocalDate.now();
         LocalDate lastMonthEndDate = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
         List<Income> incomesAfterLastMonth = incomeRepository.findByDateAfter(lastMonthEndDate);
-        // Initialize BigDecimal sum to zero
         BigDecimal totalAmount = BigDecimal.ZERO;
 
-        // Iterate through incomesAfterLastMonth and sum amounts
         for (Income income : incomesAfterLastMonth) {
             BigDecimal amount = income.getAmount();
             totalAmount = totalAmount.add(amount);

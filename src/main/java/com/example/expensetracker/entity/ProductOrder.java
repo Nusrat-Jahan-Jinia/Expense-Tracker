@@ -18,19 +18,15 @@ public class ProductOrder {
     @ManyToMany
     private Set<Product> products = new HashSet<>();
 
-    @Transient
-    private int orderId;
-
     public ProductOrder() {
     }
 
-    public ProductOrder(Long id, String orderBy, String orderDate, Customer customer, Set<Product> products, int orderId) {
+    public ProductOrder(Long id, String orderBy, String orderDate, Customer customer, Set<Product> products) {
         this.id = id;
         this.orderBy = orderBy;
         this.orderDate = orderDate;
         this.customer = customer;
         this.products = products;
-        this.orderId = orderId;
     }
 
     public Long getId() {
