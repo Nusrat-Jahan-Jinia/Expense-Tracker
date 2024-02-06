@@ -15,16 +15,11 @@ import java.math.BigDecimal;
 @Controller
 @RequestMapping("")
 public class HomeController {
-    private final ExpenseService expenseService;
-    private final IncomeService incomeService;
     private final HomeService homeService;
 
-    public HomeController(ExpenseService expenseService, IncomeService incomeService, HomeService homeService) {
-        this.expenseService = expenseService;
-        this.incomeService = incomeService;
+    public HomeController(HomeService homeService) {
         this.homeService = homeService;
     }
-
 
     @GetMapping(value = "")
     public String getHome(Model model) {
