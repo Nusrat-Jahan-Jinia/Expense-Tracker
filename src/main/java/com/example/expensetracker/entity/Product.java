@@ -10,23 +10,25 @@ public class Product {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String name;
     private int qty;
     private int price;
     public Product() {
     }
-    public Product(int id, String name, int qty, int price) {
+
+    public Product(Long id, String name, int qty, int price) {
         this.id = id;
         this.name = name;
         this.qty = qty;
         this.price = price;
     }
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

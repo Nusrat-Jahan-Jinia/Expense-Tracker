@@ -3,15 +3,13 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.repository.CategoryRepository;
 import com.example.expensetracker.service.CategoryService;
-import jakarta.validation.Valid;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
+
+import java.util.List;
+
 
 
 @Controller
@@ -27,41 +25,43 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("")
-    public ModelAndView home(){
-      ModelAndView modelAndView = new ModelAndView();
-      modelAndView.addObject("data", categoryRepository.findAll());
-      modelAndView.setViewName("category/list.html");
-      return modelAndView;
+    @GetMapping(value = "")
+    public String getAllCategories(Model model) {
+        List<Category> categories = categoryService.getCategories();
+        model.addAttribute("categories", categories);
+        return "category/list";
     }
 
     @GetMapping(value = "/create")
-    public ModelAndView create(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("dto", new Category());
-        modelAndView.addObject("method", "post");
-        modelAndView.setViewName("category/create-edit.html");
-        return modelAndView;
+    public String showAddCategoryForm(Model model) {
+        model.addAttribute("category", new Category());
+        return "category/create-edit";
     }
 
-    @PostMapping(value = "")
-    public String submitCreate(@RequestBody @Validated @ModelAttribute("category") Category category, Model model, BindingResult bindingResult){
-
-
-        if (bindingResult.hasErrors()) {
-            System.out.println("error here");
-            return "category/create-edit.html";
-        }
-
-        boolean success = categoryService.save(category);
-
-        if(!success){
-            model.addAttribute("result", "Something went wrong!");
-        }else{
-            model.addAttribute("result", "Successfully data entered!");
-        }
+    @PostMapping(value = "/create")
+    public String addCategory(@ModelAttribute("category") Category category) {
+        categoryRepository.save(category);
         return "redirect:/categories";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
+        return "redirect:/categories";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditCategoryForm(@PathVariable Long id, Model model) {
+        Category category = categoryService.getCategoryById(id).orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
+        model.addAttribute("category", category);
+        return "category/create-edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateCategory(@PathVariable Long id, @ModelAttribute("category") Category category, Model model) {
+        categoryRepository.save(category);
+        return "redirect:/products/";
+    }
 
 }
+

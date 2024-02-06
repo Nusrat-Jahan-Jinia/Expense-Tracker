@@ -8,7 +8,7 @@ import java.util.Set;
 public class ProductOrder {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String orderBy;
     private String orderDate;
 
@@ -24,19 +24,20 @@ public class ProductOrder {
     public ProductOrder() {
     }
 
-    public ProductOrder(int id, String orderBy, String orderDate, Customer customer, Set<Product> products) {
+    public ProductOrder(Long id, String orderBy, String orderDate, Customer customer, Set<Product> products, int orderId) {
         this.id = id;
         this.orderBy = orderBy;
         this.orderDate = orderDate;
         this.customer = customer;
         this.products = products;
+        this.orderId = orderId;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

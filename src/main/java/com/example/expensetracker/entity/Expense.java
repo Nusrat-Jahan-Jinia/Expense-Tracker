@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String title;
     private BigDecimal amount;
     @Temporal(TemporalType.DATE)
@@ -18,25 +18,19 @@ public class Expense {
     public Expense() {
     }
 
-    public Expense(
-            Integer id,
-            String title,
-            BigDecimal amount,
-            LocalDate date,
-            Category category
-    ) {
+    public Expense(Long id, String title, BigDecimal amount, LocalDate date, Category category) {
         this.id = id;
         this.title = title;
-        this.date = date;
         this.amount = amount;
+        this.date = date;
         this.category = category;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

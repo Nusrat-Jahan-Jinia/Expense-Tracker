@@ -6,24 +6,24 @@ import jakarta.persistence.*;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String title;
 
     public Category() {
     }
 
-    public Category(Integer id, String title) {
+    public Category(Long id, String title) {
         this.id = id;
         this.title = title;
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

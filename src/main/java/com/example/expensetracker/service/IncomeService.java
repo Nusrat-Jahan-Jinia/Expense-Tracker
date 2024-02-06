@@ -29,11 +29,11 @@ public class IncomeService {
     public Income getIncomeById(int id) {
         return incomeRepository.findById(id).orElse(null);
     }
-    public void updateExpense(Income income) {
-        if (income.getId() != null && incomeRepository.existsById(income.getId())) {
-            incomeRepository.save(income);
-        }
-    }
+//    public void updateExpense(Income income) {
+//        if (income.getId() != null && incomeRepository.existsById(income.getId())) {
+//            incomeRepository.save(income);
+//        }
+//    }
     public boolean edit(Income income) {
         incomeRepository.save(income);
         return true;

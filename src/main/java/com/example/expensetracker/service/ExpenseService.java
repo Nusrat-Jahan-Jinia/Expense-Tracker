@@ -31,11 +31,11 @@ public class ExpenseService {
     public Expense getExpenseById(int id) {
         return expenseRepository.findById(id).orElse(null);
     }
-    public void updateExpense(Expense expense) {
-        if (expense.getId() != null && expenseRepository.existsById(expense.getId())) {
-            expenseRepository.save(expense);
-        }
-    }
+//    public void updateExpense(Expense expense) {
+//        if (expense.getId() != null && expenseRepository.existsById(expense.getId())) {
+//            expenseRepository.save(expense);
+//        }
+//    }
     public boolean edit(Expense expense) {
         expenseRepository.save(expense);
         return true;
