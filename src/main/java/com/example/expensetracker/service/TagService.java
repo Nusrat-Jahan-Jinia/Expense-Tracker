@@ -3,7 +3,6 @@ package com.example.expensetracker.service;
 
 import com.example.expensetracker.entity.Tag;
 import com.example.expensetracker.repository.TagRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 

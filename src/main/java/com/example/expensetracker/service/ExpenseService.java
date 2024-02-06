@@ -49,10 +49,8 @@ public class ExpenseService {
         LocalDate today = LocalDate.now();
         LocalDate lastMonthEndDate = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
         List<Expense> expensesAfterLastMonth = expenseRepository.findByDateAfter(lastMonthEndDate);
-        // Initialize BigDecimal sum to zero
         BigDecimal totalExpense = BigDecimal.ZERO;
 
-        // Iterate through incomesAfterLastMonth and sum amounts
         for (Expense expense : expensesAfterLastMonth) {
             BigDecimal amount = expense.getAmount();
             totalExpense = totalExpense.add(amount);
