@@ -1,5 +1,6 @@
 package com.example.expensetracker.controller;
 
+import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.entity.Tag;
 import com.example.expensetracker.repository.IncomeRepository;
@@ -12,84 +13,68 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/incomes")
-public class IncomeController {
+public class IncomeController implements WebMvcConfigurer {
 
     private final IncomeService incomeService;
     private final TagService tagService;
     private final IncomeRepository incomeRepository;
 
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/income/create/results").setViewName("income/results");
+    }
     public IncomeController(IncomeService incomeService, TagService tagService,IncomeRepository incomeRepository){
         this.incomeService = incomeService;
         this.tagService = tagService;
         this.incomeRepository = incomeRepository;
     }
 
-    @GetMapping("")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", incomeRepository.findAll());
-        modelAndView.setViewName("income/list.html");
-        return modelAndView;
+    @GetMapping(value = "")
+    public String getAllIncomes(Model model) {
+        List<Income> incomes = incomeService.getIncomes();
+        model.addAttribute("incomes", incomes);
+        return "income/list";
     }
 
     @GetMapping(value = "/create")
-    public ModelAndView create(){
+    public String showAddIncomeForm(Model model) {
         List<Tag> tags = tagService.getTags();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("dto", new Income());
-        modelAndView.addObject("tags", tags);
-        modelAndView.addObject("method", "post");
-        modelAndView.setViewName("income/create.html");
-        return modelAndView;
+        model.addAttribute("income", new Income());
+        model.addAttribute("tags", tags);
+        return "income/create";
     }
-    @PostMapping(value = "")
-    public String submitCreate(@Validated @ModelAttribute("income") Income income, Model model, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            // Handle validation errors, e.g., return to the form page with error messages
-            return "income/create.html";
-        }
 
-        boolean success = incomeService.save(income);
+    @PostMapping(value = "/create")
+    public String addIncome(Income income) {
+        incomeRepository.save(income);
+        return "redirect:/income/create/results";
+    }
 
-        if(!success){
-            model.addAttribute("result", "Something went wrong!");
-        }else{
-            model.addAttribute("result", "Successfully data entered!");
-        }
+    @GetMapping("/delete/{id}")
+    public String deleteIncome(@PathVariable Long id) {
+        incomeService.deleteIncome(id);
         return "redirect:/incomes";
     }
-    @GetMapping("/{id}/update")
-    public ModelAndView update(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("dto", incomeService.getIncomeById(id));
+
+    @GetMapping("/edit/{id}")
+    public String showEditIncomeForm(@PathVariable Long id, Model model) {
         List<Tag> tags = tagService.getTags();
-        modelAndView.addObject("tags", tags);
-        modelAndView.addObject("method", "put");
-        modelAndView.setViewName("income/edit.html");
-        return modelAndView;
+        Income income = incomeService.getIncomeById(id).orElseThrow(() -> new IllegalArgumentException("Invalid income Id:" + id));
+        model.addAttribute("income", income);
+        model.addAttribute("tags", tags);
+        return "income/edit";
     }
 
-    @PutMapping(value = "/{id}")
-    public ModelAndView submitUpdate(@PathVariable("id") int id, Income income, Model model) {
-        ModelAndView modelAndView = new ModelAndView();
-        boolean success = incomeService.edit(income);
-        if (!success) {
-            model.addAttribute("result", "Something went wrong!");
-        } else {
-            model.addAttribute("result", "Successfully data updated!");
-        }
-        modelAndView.setViewName("expense/list.html");
-        return modelAndView;
-    }
-    @GetMapping("/delete/{id}")
-    public String deleteEntity(@PathVariable int id) {
-        incomeService.deleteById(id);
+    @PostMapping("/update/{id}")
+    public String updateIncome(@PathVariable Long id, @ModelAttribute("income") Income income, Model model) {
+        incomeRepository.save(income);
         return "redirect:/incomes";
     }
 }

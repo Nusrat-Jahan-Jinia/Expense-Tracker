@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="d-flex border border-light-subtle p-4 justify-content-center">
-                    <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/incomes' : '/incomes/' + id}}">
+                        <form class="d-flex flex-column" th:object="${income}" th:action="@{/incomes/create}" method="post">
                         <div class="mb-3 d-flex justify-content-between">
                             <label for="source">Source:</label>
                             <input type="text" id="source" name="source" th:field="*{source}" required />
@@ -56,13 +56,13 @@
                         <div class="mb-3 d-flex justify-content-between">
                             <label for="tag">Tag:</label>
                             <select id="tag" name="tag" th:field="*{tag}" required>
-                                <option value="" disabled selected>Select a category</option>
+                                <option value="" disabled selected>Select a tag</option>
                                 <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.title}"></option>
                             </select>
                         </div>
 
                         <div class="mb-3">
-                            <button type="submit">Save Expense</button>
+                            <button type="submit">Save Income</button>
                         </div>
                     </form>
                 </div>

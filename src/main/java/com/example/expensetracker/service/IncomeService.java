@@ -1,5 +1,6 @@
 package com.example.expensetracker.service;
 
+import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.repository.IncomeRepository;
 import org.springframework.dao.DataAccessException;
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IncomeService {
@@ -18,28 +20,15 @@ public class IncomeService {
     }
 
     public List<Income> getIncomes(){
-        return (List<Income>) incomeRepository.findAll();
+        return incomeRepository.findAll();
     }
 
-    public boolean save(Income income) throws DataAccessException {
-        incomeRepository.save(income);
-        return true;
-    }
-
-    public Income getIncomeById(int id) {
-        return incomeRepository.findById(id).orElse(null);
-    }
-//    public void updateExpense(Income income) {
-//        if (income.getId() != null && incomeRepository.existsById(income.getId())) {
-//            incomeRepository.save(income);
-//        }
-//    }
-    public boolean edit(Income income) {
-        incomeRepository.save(income);
-        return true;
-    }
-    public void deleteById(int id) {
+    public void deleteIncome(Long id) {
         incomeRepository.deleteById(id);
+    }
+
+    public Optional<Income> getIncomeById(Long id) {
+        return incomeRepository.findById(id);
     }
 
     public BigDecimal getTotalAmountAfterLastMonth() {

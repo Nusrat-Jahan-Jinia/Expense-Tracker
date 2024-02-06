@@ -10,6 +10,6 @@ import java.util.List;
 
 @Transactional
 @RepositoryRestResource(collectionResourceRel = "incomeList", path = "incomeList")
-public interface IncomeRepository extends JpaRepository<Income, Integer> {
+public interface IncomeRepository extends JpaRepository<Income, Long> {
     List<Income> findByDateAfter(LocalDate lastMonthEndDate);
 }

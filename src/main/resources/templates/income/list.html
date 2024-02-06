@@ -52,15 +52,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="item: ${data}">
-                            <td th:text="${item.id}"></td>
-                            <td th:text="${item.source}"></td>
-                            <td th:text="${item.tag.title}"></td>
-                            <td th:text="${item.amount}"></td>
-                            <td th:text="${item.date}"></td>
+                        <tr th:each="income: ${incomes}">
+                            <td th:text="${income.id}"></td>
+                            <td th:text="${income.source}"></td>
+                            <td th:text="${income.tag.title}"></td>
+                            <td th:text="${income.amount}"></td>
+                            <td th:text="${income.date}"></td>
                             <td>
-                            <a th:href="@{/incomes/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a>
-                            <a th:href="@{'/incomes/delete/' + ${item.id}}" type="button" class="btn bg-danger text-white">Delete</a>
+                                <a th:href="@{'/incomes/edit/' + ${income.id}}" type="button" class="btn bg-warning text-white">Edit</a>
+                                <a th:href="@{'/incomes/delete/' + ${income.id}}" type="button" class="btn bg-danger text-white">Delete</a>
                             </td>
                         </tr>
                         </tbody>
