@@ -1,113 +1,92 @@
 package com.example.expensetracker.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.example.expensetracker.entity.*;
 import com.example.expensetracker.exception.CustomerOrderUpdateException;
 import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ProductOrderRepository;
 import com.example.expensetracker.repository.ProductRepository;
+import com.example.expensetracker.service.CustomerService;
 import com.example.expensetracker.service.ProductOrderService;
+import com.example.expensetracker.service.ProductService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/orders")
-public class ProductOrderController {
+public class ProductOrderController implements WebMvcConfigurer {
 
-    private final CustomerRepository customerRepository;
-    private final ProductRepository productRepository;
+    private final CustomerService customerService;
+    private final ProductService productService;
     private final ProductOrderRepository productOrderRepository;
     private final ProductOrderService productOrderService;
 
     public ProductOrderController(
-            CustomerRepository customerRepository,
-            ProductRepository productRepository,
+            CustomerService customerService,
+            ProductService productService,
             ProductOrderRepository productOrderRepository,
             ProductOrderService productOrderService
     ) {
-        this.customerRepository = customerRepository;
-        this.productRepository = productRepository;
+        this.customerService = customerService;
+        this.productService = productService;
         this.productOrderRepository = productOrderRepository;
         this.productOrderService = productOrderService;
     }
 
-    @GetMapping("")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", productOrderRepository.findAll());
-        System.out.println(productOrderRepository.findAll());
-        modelAndView.setViewName("order/list.html");
-        return modelAndView;
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/order/create/results").setViewName("order/results");
+    }
+    @GetMapping(value = "")
+    public String getAllOrders(Model model) {
+        List<ProductOrder> productOrders = productOrderService.getOrders();
+        model.addAttribute("productOrders", productOrders);
+        return "order/list";
     }
 
-    @GetMapping("/create")
-    public ModelAndView create(){
-        ModelAndView modelAndView = new ModelAndView();
-        List<Customer> customers = customerRepository.findAll();
-        List<Product> products = productRepository.findAll();
-        modelAndView.addObject("dto", new ProductOrder());
-        modelAndView.addObject("customers", customers);
-        modelAndView.addObject("products", products);
-        modelAndView.addObject("method", "post");
-        modelAndView.setViewName("order/create.html");
-        return modelAndView;
+    @GetMapping(value = "/create")
+    public String showAddOrderForm(Model model) {
+        List<Customer> customers = customerService.getCustomers();
+        List<Product> products = productService.getProducts();
+        model.addAttribute("order", new ProductOrder());
+        model.addAttribute("customers", customers);
+        model.addAttribute("products", products);
+        return "order/create";
     }
 
-    @PostMapping(value = "")
-    public String submitForm(@RequestParam(name = "orderId", required = false) Integer orderId,
-                             ProductOrder productOrder,
-                             RedirectAttributes redirectAttributes) {
-
-        // Update existing order
-        if (orderId != null) {
-            try {
-                productOrderService.edit(productOrder, orderId);
-                redirectAttributes.addFlashAttribute("successMessage", "Order updated successfully!");
-            } catch (CustomerOrderUpdateException e) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Failed to update order!");
-            }
-        } else {
-            // Create new order
-            productOrderRepository.save(productOrder);
-            redirectAttributes.addFlashAttribute("successMessage", "Order created successfully!");
-        }
-//        productOrderRepository.save(productOrder);
-        return "redirect:/orders";
-    }
-
-    @GetMapping("/{id}/update")
-    public ModelAndView update(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        List<Customer> customers = customerRepository.findAll();
-        List<Product> products = productRepository.findAll();
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("orderId", id);
-        modelAndView.addObject("dto", productOrderService.getOrderById(id));
-
-        modelAndView.addObject("customers", customers);
-        modelAndView.addObject("products", products);
-        modelAndView.addObject("method", "put");
-        modelAndView.setViewName("order/edit.html");
-        return modelAndView;
+    @PostMapping(value = "/create")
+    public String addOrder(ProductOrder productOrder) {
+        productOrderRepository.save(productOrder);
+        return "redirect:/order/create/results";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteEntity(@PathVariable int id) {
-        productOrderRepository.deleteById(id);
+    public String deleteOrder(@PathVariable Long id) {
+        productOrderService.deleteOrder(id);
         return "redirect:/orders";
     }
 
-    @PutMapping(value = "/{id}")
-    public ModelAndView submitUpdate(@PathVariable("id") int customerOrderId, ProductOrder productOrder, Model model) {
-        ModelAndView modelAndView = new ModelAndView();
-        productOrderService.edit(productOrder, customerOrderId);
+    @GetMapping("/edit/{id}")
+    public String showEditCategoryForm(@PathVariable Long id, Model model) {
+        List<Customer> customers = customerService.getCustomers();
+        List<Product> products = productService.getProducts();
+        ProductOrder productOrder = productOrderService.getOrderById(id).orElseThrow(() -> new IllegalArgumentException("Invalid order Id:" + id));
+        model.addAttribute("order", productOrder);
+        model.addAttribute("customers", customers);
+        model.addAttribute("products", products);
+        return "order/edit";
+    }
 
-        modelAndView.setViewName("order/list.html");
-        return modelAndView;
+    @PostMapping("/update/{id}")
+    public String updateCategory(@PathVariable Long id, @ModelAttribute("order") ProductOrder productOrder, Model model) {
+        productOrderRepository.save(productOrder);
+        return "redirect:/orders";
     }
 
 }
+

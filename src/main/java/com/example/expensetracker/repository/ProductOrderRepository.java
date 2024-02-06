@@ -7,5 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @RepositoryRestResource(collectionResourceRel = "productOrderList", path = "productOrderList")
-public interface ProductOrderRepository extends JpaRepository<ProductOrder, Integer> {
+public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long> {
 }

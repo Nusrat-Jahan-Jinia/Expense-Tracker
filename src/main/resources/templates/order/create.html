@@ -57,8 +57,8 @@
             <div class="col-md-12">
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
 
-                    <h2>Add Customer and Product</h2>
-                    <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/orders' : '/orders/' + id}}">
+                    <h2>Create an order</h2>
+                        <form class="d-flex flex-column" th:object="${order}" th:action="@{/orders/create}" method="post">
 
                         <label>Order By:</label>
                         <input type="text" th:field="*{orderBy}" /><br/>
