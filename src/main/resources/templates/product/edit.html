@@ -47,15 +47,17 @@
             <div class="col-md-12">
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
 
-                    <h2>Add Customer Information</h2>
-                    <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/orders' : '/orders/' + id}}">
-                        <label for="productName">Name:</label>
-                        <input type="text" id="productName" th:field="*{productName}"/><br/>
+                    <h2>Update Product Information</h2>
 
-                        <label for="price">Email:</label>
+                    <form th:object="${product}" th:action="@{'/products/update/' + ${product.id}}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
+                        <label for="name">product Name:</label>
+                        <input type="text" id="name" th:field="*{name}"/><br/>
+
+                        <label for="price">price:</label>
                         <input type="text" id="price" th:field="*{price}"/><br/>
 
-                        <label for="qty">Gender:</label>
+                        <label for="qty">qty:</label>
                         <input type="text" id="qty" th:field="*{qty}"/><br/>
 
                         <input type="submit" value="Submit"/>

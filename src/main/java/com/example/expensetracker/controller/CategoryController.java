@@ -68,7 +68,7 @@ public class CategoryController implements WebMvcConfigurer {
     @PostMapping("/update/{id}")
     public String updateCategory(@PathVariable Long id, @ModelAttribute("category") Category category, Model model) {
         categoryRepository.save(category);
-        return "redirect:/products/";
+        return "redirect:/categories";
     }
 
 }

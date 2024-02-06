@@ -48,7 +48,8 @@
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
 
                     <h2>Add Customer Information</h2>
-                    <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/customers' : '/customers/' + id}}">
+                    <form th:object="${customer}" th:action="@{'/customers/update/' + ${customer.id}}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
                         <label for="name">Name:</label>
                         <input type="text" id="name" th:field="*{name}"/><br/>
 
@@ -57,7 +58,6 @@
 
                         <label for="gender">Gender:</label>
                         <input type="text" id="gender" th:field="*{gender}"/><br/>
-
 
                         <input type="submit" value="Submit"/>
                     </form>

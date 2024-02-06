@@ -2,44 +2,66 @@ package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Product;
 import com.example.expensetracker.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.expensetracker.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 
 @Controller
 @RequestMapping("/products")
-public class ProductController {
+public class ProductController implements WebMvcConfigurer {
     private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ProductService productService) {
         this.productRepository = productRepository;
+        this.productService = productService;
     }
 
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/product/create/results").setViewName("product/results");
+    }
 
-    @GetMapping("")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", productRepository.findAll());
-        modelAndView.setViewName("product/list.html");
-        return modelAndView;
+    @GetMapping(value = "")
+    public String getAllProducts(Model model) {
+        List<Product> products = productService.getProducts();
+        model.addAttribute("products", products);
+        return "product/list";
     }
 
     @GetMapping(value = "/create")
-    public ModelAndView create(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("dto", new Product());
-        modelAndView.addObject("method", "post");
-        modelAndView.setViewName("product/create.html");
-        return modelAndView;
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "product/create";
     }
 
-    @PostMapping(value = "")
-    public String submitCreate(Product product, Model model){
+    @PostMapping(value = "/create")
+    public String addProduct(Product product) {
+        productRepository.save(product);
+        return "redirect:/product/create/results";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return "redirect:/products";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditProductForm(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id).orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
+        model.addAttribute("product", product);
+        return "product/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable Long id, @ModelAttribute("product") Product product, Model model) {
         productRepository.save(product);
         return "redirect:/products";
     }

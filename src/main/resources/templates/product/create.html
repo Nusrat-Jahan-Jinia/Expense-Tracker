@@ -47,8 +47,8 @@
             <div class="col-md-12">
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
 
-                    <h2>Add Customer Information</h2>
-                    <form class="d-flex flex-column" th:method="@{${method}}" th:object="${dto}" th:action="@{${method == 'post' ? '/products' : '/products/' + id}}">
+                    <h2>Add Product Information</h2>
+                    <form th:object="${product}" th:action="@{/products/create}" method="post">
                         <label for="name">product Name:</label>
                         <input type="text" id="name" th:field="*{name}"/><br/>
 

@@ -58,11 +58,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="item: ${data}">
-                            <td th:text="${item.name}"></td>
-                            <td th:text="${item.gender}"></td>
-                            <td th:text="${item.email}"></td>
-                            <td><a th:href="@{/customers/{id}/update(id=${item.id})}" type="button" class="btn bg-warning text-white">Edit</a></td>
+                        <tr th:each="customer: ${customers}">
+                            <td th:text="${customer.name}"></td>
+                            <td th:text="${customer.gender}"></td>
+                            <td th:text="${customer.email}"></td>
+                            <td>
+                                <a th:href="@{'/customers/edit/' + ${customer.id}}" type="button" class="btn bg-warning text-white">Edit</a>
+                                <a th:href="@{'/customers/delete/' + ${customer.id}}" type="button" class="btn bg-danger text-white">Delete</a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
