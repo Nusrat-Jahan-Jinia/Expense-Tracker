@@ -3,16 +3,19 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.repository.CategoryRepository;
 import com.example.expensetracker.service.CategoryService;
+import jakarta.validation.Valid;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
 
 @Controller
+@Validated
 @RequestMapping("/categories")
 public class CategoryController {
 
@@ -42,7 +45,14 @@ public class CategoryController {
     }
 
     @PostMapping(value = "")
-    public String submitCreate(Category category, Model model){
+    public String submitCreate(@RequestBody @Validated @ModelAttribute("category") Category category, Model model, BindingResult bindingResult){
+
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("error here");
+            return "category/create-edit.html";
+        }
+
         boolean success = categoryService.save(category);
 
         if(!success){
@@ -52,4 +62,6 @@ public class CategoryController {
         }
         return "redirect:/categories";
     }
+
+
 }

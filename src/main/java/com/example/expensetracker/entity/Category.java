@@ -1,6 +1,7 @@
 package com.example.expensetracker.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -8,6 +9,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String title;
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
