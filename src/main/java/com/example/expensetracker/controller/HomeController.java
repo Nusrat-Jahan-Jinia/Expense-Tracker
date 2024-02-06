@@ -5,9 +5,9 @@ import com.example.expensetracker.service.HomeService;
 import com.example.expensetracker.service.IncomeService;
 import com.example.expensetracker.util.Utils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
 
@@ -25,22 +25,21 @@ public class HomeController {
         this.homeService = homeService;
     }
 
-    @GetMapping("")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
+
+    @GetMapping(value = "")
+    public String getHome(Model model) {
         String today = Utils.getToday();
         String lastMonth = Utils.getLastMonth();
         BigDecimal totalExpense = homeService.getTotalExpenseAfterLastMonth();
         BigDecimal totalIncome = homeService.getTotalIncomeAfterLastMonth();
         BigDecimal totalSavings = homeService.getTotalSavingsAfterLastMonth();
-
-        modelAndView.addObject("totalExpense", totalExpense);
-        modelAndView.addObject("totalIncome", totalIncome);
-        modelAndView.addObject("totalSavings", totalSavings);
-        modelAndView.addObject("count", 4000);
-        modelAndView.addObject("today", today);
-        modelAndView.addObject("lastMonth", lastMonth);
-        modelAndView.setViewName("dashboard");
-        return modelAndView;
+        model.addAttribute("totalExpense", totalExpense);
+        model.addAttribute("totalIncome", totalIncome);
+        model.addAttribute("totalSavings", totalSavings);
+        model.addAttribute("count", 4000);
+        model.addAttribute("today", today);
+        model.addAttribute("lastMonth", lastMonth);
+        model.addAttribute("lastMonth", lastMonth);
+        return "dashboard";
     }
 }

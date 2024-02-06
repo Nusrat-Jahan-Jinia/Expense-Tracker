@@ -1,15 +1,12 @@
 package com.example.expensetracker.controller;
 
-import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.entity.Customer;
 import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ProductRepository;
 import com.example.expensetracker.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

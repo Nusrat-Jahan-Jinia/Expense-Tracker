@@ -1,10 +1,7 @@
 package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.*;
-import com.example.expensetracker.exception.CustomerOrderUpdateException;
-import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ProductOrderRepository;
-import com.example.expensetracker.repository.ProductRepository;
 import com.example.expensetracker.service.CustomerService;
 import com.example.expensetracker.service.ProductOrderService;
 import com.example.expensetracker.service.ProductService;

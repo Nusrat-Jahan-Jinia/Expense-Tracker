@@ -14,17 +14,14 @@ public class HomeService {
     }
 
     public BigDecimal getTotalExpenseAfterLastMonth() {
-        BigDecimal totalExpense = expenseService.getTotalAmountAfterLastMonth();
-        return totalExpense;
+        return expenseService.getTotalAmountAfterLastMonth();
     }
     public BigDecimal getTotalIncomeAfterLastMonth() {
-        BigDecimal totalIncome = incomeService.getTotalAmountAfterLastMonth();
-        return totalIncome;
+        return incomeService.getTotalAmountAfterLastMonth();
     }
     public BigDecimal getTotalSavingsAfterLastMonth() {
         BigDecimal totalExpense = expenseService.getTotalAmountAfterLastMonth();
         BigDecimal totalIncome = incomeService.getTotalAmountAfterLastMonth();
-        BigDecimal totalSavings = totalIncome.subtract(totalExpense);
-        return totalSavings;
+        return totalIncome.subtract(totalExpense);
     }
 }
