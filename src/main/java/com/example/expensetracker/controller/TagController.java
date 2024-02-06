@@ -3,17 +3,19 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Tag;
 import com.example.expensetracker.repository.TagRepository;
 import com.example.expensetracker.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/tags")
-public class TagController {
+public class TagController implements WebMvcConfigurer {
 
     private final TagService tagService;
     private final TagRepository tagRepository;
@@ -22,31 +24,45 @@ public class TagController {
         this.tagService = tagService;
         this.tagRepository = tagRepository;
     }
-    @GetMapping("")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", tagRepository.findAll());
-        modelAndView.setViewName("tag/list.html");
-        return modelAndView;
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/tag/create/results").setViewName("tag/results");
     }
+    @GetMapping(value = "")
+    public String getAllTags(Model model) {
+        List<Tag> tags = tagService.getTags();
+        model.addAttribute("tags", tags);
+        return "tag/list";
+    }
+
     @GetMapping(value = "/create")
-    public ModelAndView create(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("dto", new Tag());
-        modelAndView.addObject("method", "post");
-        modelAndView.setViewName("tag/create-edit.html");
-        return modelAndView;
+    public String showAddTagForm(Model model) {
+        model.addAttribute("tag", new Tag());
+        return "tag/create";
     }
 
-    @PostMapping(value = "")
-    public String submitCreate(Tag tag, Model model){
-        boolean success = tagService.save(tag);
+    @PostMapping(value = "/create")
+    public String addTag(Tag tag ) {
+        tagRepository.save(tag);
+        return "redirect:/tag/create/results";
+    }
 
-        if(!success){
-            model.addAttribute("result", "Something went wrong!");
-        }else{
-            model.addAttribute("result", "Successfully data entered!");
-        }
+    @GetMapping("/delete/{id}")
+    public String deleteTag(@PathVariable Long id) {
+        tagService.deleteTag(id);
         return "redirect:/tags";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditTagForm(@PathVariable Long id, Model model) {
+        Tag tag = tagService.getTagById(id).orElseThrow(() -> new IllegalArgumentException("Invalid tag Id:" + id));
+        model.addAttribute("tag", tag);
+        return "tag/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateTag(@PathVariable Long id, @ModelAttribute("category") Tag tag, Model model) {
+        tagRepository.save(tag);
+        return "redirect:/tags/";
     }
 }
