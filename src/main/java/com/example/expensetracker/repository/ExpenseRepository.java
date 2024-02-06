@@ -10,7 +10,7 @@ import java.util.List;
 
 @Transactional
 @RepositoryRestResource(collectionResourceRel = "expenseList", path = "expenseList")
-public interface ExpenseRepository extends JpaRepository<Expense, Integer> {
+public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     List<Expense> findByDateBetween(LocalDate startDate, LocalDate endDate);
 

@@ -1,5 +1,6 @@
 package com.example.expensetracker.service;
 
+import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.entity.Expense;
 import com.example.expensetracker.entity.Income;
 import com.example.expensetracker.repository.ExpenseRepository;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Optional;
 
 @Service
 public class ExpenseService {
@@ -20,29 +22,15 @@ public class ExpenseService {
     }
 
     public List<Expense> getExpenses(){
-        return (List<Expense>) expenseRepository.findAll();
+        return expenseRepository.findAll();
     }
 
-    public boolean save(Expense expense) throws DataAccessException {
-        expenseRepository.save(expense);
-        return true;
-    }
-
-    public Expense getExpenseById(int id) {
-        return expenseRepository.findById(id).orElse(null);
-    }
-//    public void updateExpense(Expense expense) {
-//        if (expense.getId() != null && expenseRepository.existsById(expense.getId())) {
-//            expenseRepository.save(expense);
-//        }
-//    }
-    public boolean edit(Expense expense) {
-        expenseRepository.save(expense);
-        return true;
-    }
-
-    public void deleteById(int id) {
+    public void deleteExpense(Long id) {
         expenseRepository.deleteById(id);
+    }
+
+    public Optional<Expense> getExpenseById(Long id) {
+        return expenseRepository.findById(id);
     }
 
     public BigDecimal getTotalAmountAfterLastMonth() {

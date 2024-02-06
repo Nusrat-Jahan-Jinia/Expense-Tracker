@@ -13,88 +13,75 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/expenses")
-public class ExpenseController {
+public class ExpenseController implements WebMvcConfigurer {
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
+    private final ExpenseRepository expenseRepository;
 
-    public ExpenseController(ExpenseService expenseService, CategoryService categoryService,CategoryRepository categoryRepository){
+    public ExpenseController(
+            ExpenseService expenseService,
+            CategoryService categoryService,
+            CategoryRepository categoryRepository,
+            ExpenseRepository expenseRepository
+    ){
         this.expenseService = expenseService;
         this.categoryService = categoryService;
         this.categoryRepository = categoryRepository;
+        this.expenseRepository = expenseRepository;
     }
 
-    @GetMapping("")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("data", expenseService.getExpenses());
-        modelAndView.setViewName("expense/list.html");
-        return modelAndView;
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/expense/create/results").setViewName("expense/results");
+    }
+    @GetMapping(value = "")
+    public String getAllExpenses(Model model) {
+        List<Expense> expenses = expenseService.getExpenses();
+        model.addAttribute("expenses", expenses);
+        return "expense/list";
     }
 
     @GetMapping(value = "/create")
-    public ModelAndView create(){
+    public String showAddExpenseForm(Model model) {
         List<Category> categories = categoryService.getCategories();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("dto", new Expense());
-        modelAndView.addObject("categories", categories);
-        modelAndView.addObject("method", "post");
-        modelAndView.setViewName("expense/create.html");
-        return modelAndView;
+        model.addAttribute("expense", new Expense());
+        model.addAttribute("categories", categories);
+        return "expense/create";
     }
 
-    @PostMapping(value = "")
-    public String submitCreate(@Validated @ModelAttribute("expense") Expense expense, Model model, BindingResult bindingResult){
-        // frontend error show
-        if (bindingResult.hasErrors()) {
-            return "expense/create.html";
-        }
-
-        boolean success = expenseService.save(expense);
-
-        // backend error handle
-        if(!success){
-            model.addAttribute("result", "Something went wrong!");
-        }else{
-            model.addAttribute("result", "Successfully data entered!");
-        }
-        return "redirect:/expenses";
-    }
-
-    @GetMapping("/{id}/update")
-    public ModelAndView update(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("dto", expenseService.getExpenseById(id));
-        List<Category> categories = categoryService.getCategories();
-        modelAndView.addObject("categories", categories);
-        modelAndView.addObject("method", "put");
-        modelAndView.setViewName("expense/edit.html");
-        return modelAndView;
-    }
-
-    @PutMapping(value = "/{id}")
-    public ModelAndView submitUpdate(@PathVariable("id") int id, Expense expense, Model model) {
-        ModelAndView modelAndView = new ModelAndView();
-        boolean success = expenseService.edit(expense);
-        if (!success) {
-            model.addAttribute("result", "Something went wrong!");
-        } else {
-            model.addAttribute("result", "Successfully data updated!");
-        }
-        modelAndView.setViewName("expense/list.html");
-        return modelAndView;
+    @PostMapping(value = "/create")
+    public String addExpense(Expense expense) {
+        expenseRepository.save(expense);
+        return "redirect:/expense/create/results";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteEntity(@PathVariable int id) {
-        expenseService.deleteById(id);
+    public String deleteExpense(@PathVariable Long id) {
+        expenseService.deleteExpense(id);
         return "redirect:/expenses";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditExpenseForm(@PathVariable Long id, Model model) {
+        List<Category> categories = categoryService.getCategories();
+        Expense expense = expenseService.getExpenseById(id).orElseThrow(() -> new IllegalArgumentException("Invalid expense Id:" + id));
+        model.addAttribute("expense", expense);
+        model.addAttribute("categories", categories);
+        return "expense/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateExpense(@PathVariable Long id, @ModelAttribute("category") Expense expense, Model model) {
+        expenseRepository.save(expense);
+        return "redirect:/expense/create/results";
     }
 
 }
