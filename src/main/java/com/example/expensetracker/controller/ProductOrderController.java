@@ -8,15 +8,13 @@ import com.example.expensetracker.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/orders")
-public class ProductOrderController implements WebMvcConfigurer {
+public class ProductOrderController {
 
     private final CustomerService customerService;
     private final ProductService productService;
@@ -35,10 +33,6 @@ public class ProductOrderController implements WebMvcConfigurer {
         this.productOrderService = productOrderService;
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/order/create/results").setViewName("order/results");
-    }
     @GetMapping(value = "")
     public String getAllOrders(Model model) {
         List<ProductOrder> productOrders = productOrderService.getOrders();
@@ -59,7 +53,7 @@ public class ProductOrderController implements WebMvcConfigurer {
     @PostMapping(value = "/create")
     public String addOrder(ProductOrder productOrder) {
         productOrderRepository.save(productOrder);
-        return "redirect:/order/create/results";
+        return "redirect:/orders";
     }
 
     @GetMapping("/delete/{id}")

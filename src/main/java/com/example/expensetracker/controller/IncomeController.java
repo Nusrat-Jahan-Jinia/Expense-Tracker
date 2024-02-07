@@ -9,23 +9,17 @@ import com.example.expensetracker.service.TagService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/incomes")
-public class IncomeController implements WebMvcConfigurer {
+public class IncomeController {
 
     private final IncomeService incomeService;
     private final TagService tagService;
     private final IncomeRepository incomeRepository;
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/income/create/results").setViewName("income/results");
-    }
     public IncomeController(IncomeService incomeService, TagService tagService,IncomeRepository incomeRepository){
         this.incomeService = incomeService;
         this.tagService = tagService;
@@ -50,7 +44,7 @@ public class IncomeController implements WebMvcConfigurer {
     @PostMapping(value = "/create")
     public String addIncome(Income income) {
         incomeRepository.save(income);
-        return "redirect:/income/create/results";
+        return "redirect:/incomes";
     }
 
     @GetMapping("/delete/{id}")

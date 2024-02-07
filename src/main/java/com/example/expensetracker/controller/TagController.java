@@ -6,14 +6,12 @@ import com.example.expensetracker.service.TagService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/tags")
-public class TagController implements WebMvcConfigurer {
+public class TagController {
 
     private final TagService tagService;
     private final TagRepository tagRepository;
@@ -21,10 +19,6 @@ public class TagController implements WebMvcConfigurer {
     public TagController(TagService tagService, TagRepository tagRepository){
         this.tagService = tagService;
         this.tagRepository = tagRepository;
-    }
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/tag/create/results").setViewName("tag/results");
     }
     @GetMapping(value = "")
     public String getAllTags(Model model) {
@@ -42,7 +36,7 @@ public class TagController implements WebMvcConfigurer {
     @PostMapping(value = "/create")
     public String addTag(Tag tag ) {
         tagRepository.save(tag);
-        return "redirect:/tag/create/results";
+        return "redirect:/tags";
     }
 
     @GetMapping("/delete/{id}")
@@ -61,6 +55,6 @@ public class TagController implements WebMvcConfigurer {
     @PostMapping("/update/{id}")
     public String updateTag(@PathVariable Long id, @ModelAttribute("category") Tag tag, Model model) {
         tagRepository.save(tag);
-        return "redirect:/tags/";
+        return "redirect:/tags";
     }
 }

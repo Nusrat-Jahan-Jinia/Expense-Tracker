@@ -1,8 +1,6 @@
 package com.example.expensetracker.controller;
 
-import com.example.expensetracker.service.ExpenseService;
 import com.example.expensetracker.service.HomeService;
-import com.example.expensetracker.service.IncomeService;
 import com.example.expensetracker.util.Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

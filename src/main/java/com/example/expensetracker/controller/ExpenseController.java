@@ -2,42 +2,33 @@ package com.example.expensetracker.controller;
 
 import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.entity.Expense;
-import com.example.expensetracker.repository.CategoryRepository;
 import com.example.expensetracker.repository.ExpenseRepository;
 import com.example.expensetracker.service.CategoryService;
 import com.example.expensetracker.service.ExpenseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/expenses")
-public class ExpenseController implements WebMvcConfigurer {
+public class ExpenseController {
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
-    private final CategoryRepository categoryRepository;
     private final ExpenseRepository expenseRepository;
 
     public ExpenseController(
             ExpenseService expenseService,
             CategoryService categoryService,
-            CategoryRepository categoryRepository,
             ExpenseRepository expenseRepository
     ){
         this.expenseService = expenseService;
         this.categoryService = categoryService;
-        this.categoryRepository = categoryRepository;
         this.expenseRepository = expenseRepository;
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/expense/create/results").setViewName("expense/results");
-    }
     @GetMapping(value = "")
     public String getAllExpenses(Model model) {
         List<Expense> expenses = expenseService.getExpenses();

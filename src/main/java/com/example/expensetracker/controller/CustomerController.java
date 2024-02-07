@@ -7,28 +7,20 @@ import com.example.expensetracker.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 
 @Controller
 @RequestMapping("/customers")
-public class CustomerController implements WebMvcConfigurer {
+public class CustomerController {
 
     private final CustomerRepository customerRepository;
-    private final ProductRepository productRepository;
     private final CustomerService customerService;
 
-    public CustomerController(CustomerRepository customerRepository, ProductRepository productRepository, CustomerService customerService) {
+    public CustomerController(CustomerRepository customerRepository, CustomerService customerService) {
         this.customerRepository = customerRepository;
-        this.productRepository = productRepository;
         this.customerService = customerService;
-    }
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/customer/create/results").setViewName("customer/results");
     }
     @GetMapping(value = "")
     public String getAllCustomers(Model model) {
@@ -46,7 +38,7 @@ public class CustomerController implements WebMvcConfigurer {
     @PostMapping(value = "/create")
     public String addCustomer(Customer customer) {
         customerRepository.save(customer);
-        return "redirect:/customer/create/results";
+        return "redirect:/customers";
     }
 
     @GetMapping("/delete/{id}")

@@ -3,23 +3,17 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.repository.CategoryRepository;
 import com.example.expensetracker.service.CategoryService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 
 
 @Controller
-@Validated
 @RequestMapping("/categories")
-public class CategoryController implements WebMvcConfigurer {
+public class CategoryController {
 
     private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
@@ -29,10 +23,6 @@ public class CategoryController implements WebMvcConfigurer {
         this.categoryRepository = categoryRepository;
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/category/create/results").setViewName("category/results");
-    }
     @GetMapping(value = "")
     public String getAllCategories(Model model) {
         List<Category> categories = categoryService.getCategories();
@@ -49,7 +39,7 @@ public class CategoryController implements WebMvcConfigurer {
     @PostMapping(value = "/create")
     public String addCategory(Category category) {
         categoryRepository.save(category);
-        return "redirect:/category/create/results";
+        return "redirect:/categories";
     }
 
     @GetMapping("/delete/{id}")
