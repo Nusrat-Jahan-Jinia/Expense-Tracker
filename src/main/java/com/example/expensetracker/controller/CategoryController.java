@@ -55,8 +55,8 @@ public class CategoryController {
         return "category/edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateCategory(@PathVariable Long id, @ModelAttribute("category") Category category, Model model) {
+    @PostMapping("/edit/{id}")
+    public String updateCategory(@ModelAttribute("category") Category category) {
         categoryRepository.save(category);
         return "redirect:/categories";
     }

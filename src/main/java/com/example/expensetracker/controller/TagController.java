@@ -52,8 +52,8 @@ public class TagController {
         return "tag/edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateTag(@PathVariable Long id, @ModelAttribute("category") Tag tag, Model model) {
+    @PostMapping("/edit/{id}")
+    public String updateTag(@ModelAttribute("category") Tag tag) {
         tagRepository.save(tag);
         return "redirect:/tags";
     }
