@@ -32,14 +32,12 @@ public class CustomerController {
     @GetMapping(value = "/create")
     public String showAddCustomerForm(Model model) {
         model.addAttribute("customer", new Customer());
-        System.out.println("customer  create  get method");
         return "customer/create";
     }
 
     @PostMapping(value = "/create")
     public String addCustomer(Customer customer) {
         customerRepository.save(customer);
-        System.out.println("customer  create  post method");
         return "redirect:/customers";
     }
 
