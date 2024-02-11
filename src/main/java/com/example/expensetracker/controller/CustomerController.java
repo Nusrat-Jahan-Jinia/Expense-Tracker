@@ -32,12 +32,14 @@ public class CustomerController {
     @GetMapping(value = "/create")
     public String showAddCustomerForm(Model model) {
         model.addAttribute("customer", new Customer());
+        System.out.println("customer  create  get method");
         return "customer/create";
     }
 
     @PostMapping(value = "/create")
     public String addCustomer(Customer customer) {
         customerRepository.save(customer);
+        System.out.println("customer  create  post method");
         return "redirect:/customers";
     }
 
@@ -54,8 +56,8 @@ public class CustomerController {
         return "customer/edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateCustomer(@PathVariable Long id, @ModelAttribute("customer") Customer customer, Model model) {
+    @PostMapping("/edit/{id}")
+    public String updateCustomer(@ModelAttribute("customer") Customer customer) {
         customerRepository.save(customer);
         return "redirect:/customers";
     }

@@ -53,8 +53,8 @@ public class ProductController {
         return "product/edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute("product") Product product, Model model) {
+    @PostMapping("/edit/{id}")
+    public String updateProduct(@ModelAttribute("product") Product product) {
         productRepository.save(product);
         return "redirect:/products";
     }

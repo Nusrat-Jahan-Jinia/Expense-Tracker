@@ -47,7 +47,7 @@ public class ExpenseController {
     @PostMapping(value = "/create")
     public String addExpense(Expense expense) {
         expenseRepository.save(expense);
-        return "redirect:/expense/create/results";
+        return "redirect:/expenses";
     }
 
     @GetMapping("/delete/{id}")
@@ -65,10 +65,10 @@ public class ExpenseController {
         return "expense/edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateExpense(@PathVariable Long id, @ModelAttribute("category") Expense expense, Model model) {
+    @PostMapping("/edit/{id}")
+    public String updateExpense(@ModelAttribute("category") Expense expense) {
         expenseRepository.save(expense);
-        return "redirect:/expense/create/results";
+        return "redirect:/expenses";
     }
 
 }

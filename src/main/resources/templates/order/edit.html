@@ -67,7 +67,7 @@
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
 
                     <h2>Add Customer and Product</h2>
-                    <form class="d-flex flex-column" th:object="${order}" th:action="@{'/orders/update/' + ${order.id}}" method="post">
+                    <form class="d-flex flex-column" th:object="${order}" method="post">
                         <input type="hidden" name="orderId" th:value="${orderId}" />
                         <label>Order By:</label>
                         <input type="text" th:field="*{orderBy}" /><br/>

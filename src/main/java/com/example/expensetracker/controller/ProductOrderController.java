@@ -73,8 +73,8 @@ public class ProductOrderController {
         return "order/edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateCategory(@PathVariable Long id, @ModelAttribute("order") ProductOrder productOrder, Model model) {
+    @PostMapping("/edit/{id}")
+    public String updateCategory(@ModelAttribute("order") ProductOrder productOrder) {
         productOrderRepository.save(productOrder);
         return "redirect:/orders";
     }

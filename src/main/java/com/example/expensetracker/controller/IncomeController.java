@@ -62,8 +62,8 @@ public class IncomeController {
         return "income/edit";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateIncome(@PathVariable Long id, @ModelAttribute("income") Income income, Model model) {
+    @PostMapping("/edit/{id}")
+    public String updateIncome(@ModelAttribute("income") Income income) {
         incomeRepository.save(income);
         return "redirect:/incomes";
     }
