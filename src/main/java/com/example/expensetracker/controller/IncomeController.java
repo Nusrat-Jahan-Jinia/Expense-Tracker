@@ -6,8 +6,10 @@ import com.example.expensetracker.entity.Tag;
 import com.example.expensetracker.repository.IncomeRepository;
 import com.example.expensetracker.service.IncomeService;
 import com.example.expensetracker.service.TagService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,7 +44,12 @@ public class IncomeController {
     }
 
     @PostMapping(value = "/create")
-    public String addIncome(Income income) {
+    public String addIncome(@Valid Income income, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Tag> tags = tagService.getTags();
+            model.addAttribute("tags", tags);
+            return "income/create";
+        }
         incomeRepository.save(income);
         return "redirect:/incomes";
     }
@@ -63,7 +70,12 @@ public class IncomeController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateIncome(@ModelAttribute("income") Income income) {
+    public String updateIncome(@Valid @ModelAttribute("income") Income income, BindingResult bindingResult,Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Tag> tags = tagService.getTags();
+            model.addAttribute("tags", tags);
+            return "income/create";
+        }
         incomeRepository.save(income);
         return "redirect:/incomes";
     }

@@ -1,6 +1,7 @@
 package com.example.expensetracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -13,10 +14,16 @@ public class Income {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
     private String source;
+
+    @NotNull
     private BigDecimal amount;
     @ManyToOne(fetch = FetchType.EAGER)
     private Tag tag;
+
+    @NotNull
     @Temporal(TemporalType.DATE)
     private LocalDate date;
     public Income() {

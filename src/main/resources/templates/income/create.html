@@ -40,17 +40,20 @@
                         <form class="d-flex flex-column" th:object="${income}" th:action="@{/incomes/create}" method="post">
                         <div class="mb-3 d-flex justify-content-between">
                             <label for="source">Source:</label>
-                            <input type="text" id="source" name="source" th:field="*{source}" required/>
+                            <input type="text" id="source" name="source" th:field="*{source}"/>
+                            <div th:if="${#fields.hasErrors('source')}" th:errors="*{source}" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3 d-flex justify-content-between">
                             <label for="amount">Amount:</label>
-                            <input type="text" id="amount" name="amount" th:field="*{amount}" required/>
+                            <input type="text" id="amount" name="amount" th:field="*{amount}"/>
+                            <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3 d-flex justify-content-between">
                             <label for="date">Date:</label>
-                            <input type="date" id="date" name="date" th:field="*{date}" required />
+                            <input type="date" id="date" name="date" th:field="*{date}" />
+                            <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3 d-flex justify-content-between">
