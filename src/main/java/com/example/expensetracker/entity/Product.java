@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Product {
@@ -12,13 +15,20 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
     private String name;
-    private int qty;
-    private int price;
+    @NotNull
+    @Min(1)
+    private Integer qty;
+
+    @NotNull
+    @Min(1)
+    private Integer price;
     public Product() {
     }
 
-    public Product(Long id, String name, int qty, int price) {
+    public Product(Long id, String name, Integer qty, Integer price) {
         this.id = id;
         this.name = name;
         this.qty = qty;
@@ -41,19 +51,19 @@ public class Product {
         this.name = name;
     }
 
-    public int getQty() {
+    public Integer getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(Integer qty) {
         this.qty = qty;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

@@ -51,12 +51,15 @@
                     <form th:object="${product}" th:action="@{/products/create}" method="post">
                         <label for="name">product Name:</label>
                         <input type="text" id="name" th:field="*{name}"/><br/>
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
 
                         <label for="price">price:</label>
                         <input type="text" id="price" th:field="*{price}"/><br/>
+                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></div>
 
                         <label for="qty">qty:</label>
                         <input type="text" id="qty" th:field="*{qty}"/><br/>
+                        <div th:if="${#fields.hasErrors('qty')}" th:errors="*{qty}" class="text-danger"></div>
 
                         <input type="submit" value="Submit"/>
                     </form>

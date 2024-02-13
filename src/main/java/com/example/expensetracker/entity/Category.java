@@ -2,7 +2,6 @@ package com.example.expensetracker.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Category {

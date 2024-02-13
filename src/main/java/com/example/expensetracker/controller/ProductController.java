@@ -3,8 +3,10 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Product;
 import com.example.expensetracker.repository.ProductRepository;
 import com.example.expensetracker.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +37,10 @@ public class ProductController {
     }
 
     @PostMapping(value = "/create")
-    public String addProduct(Product product) {
+    public String addProduct(@Valid Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "product/create";
+        }
         productRepository.save(product);
         return "redirect:/products";
     }
@@ -54,7 +59,10 @@ public class ProductController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateProduct(@ModelAttribute("product") Product product) {
+    public String updateProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "product/edit";
+        }
         productRepository.save(product);
         return "redirect:/products";
     }
