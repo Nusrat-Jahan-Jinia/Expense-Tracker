@@ -5,8 +5,10 @@ import com.example.expensetracker.entity.Expense;
 import com.example.expensetracker.repository.ExpenseRepository;
 import com.example.expensetracker.service.CategoryService;
 import com.example.expensetracker.service.ExpenseService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -45,7 +47,12 @@ public class ExpenseController {
     }
 
     @PostMapping(value = "/create")
-    public String addExpense(Expense expense) {
+    public String addExpense(@Valid Expense expense, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Category> categories = categoryService.getCategories();
+            model.addAttribute("categories", categories);
+            return "expense/create";
+        }
         expenseRepository.save(expense);
         return "redirect:/expenses";
     }
@@ -66,7 +73,12 @@ public class ExpenseController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateExpense(@ModelAttribute("category") Expense expense) {
+    public String updateExpense(@Valid @ModelAttribute("expense") Expense expense, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Category> categories = categoryService.getCategories();
+            model.addAttribute("categories", categories);
+            return "expense/edit";
+        }
         expenseRepository.save(expense);
         return "redirect:/expenses";
     }
