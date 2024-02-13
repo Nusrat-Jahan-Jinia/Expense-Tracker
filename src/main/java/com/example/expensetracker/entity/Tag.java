@@ -1,6 +1,7 @@
 package com.example.expensetracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Tag {
@@ -8,6 +9,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     private String title;
     public Tag() {
     }

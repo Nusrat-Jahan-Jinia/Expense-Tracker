@@ -3,7 +3,9 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Category;
 import com.example.expensetracker.repository.CategoryRepository;
 import com.example.expensetracker.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
@@ -37,7 +39,10 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/create")
-    public String addCategory(Category category) {
+    public String addCategory(@Valid Category category, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "category/create";
+        }
         categoryRepository.save(category);
         return "redirect:/categories";
     }
@@ -56,7 +61,10 @@ public class CategoryController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateCategory(@ModelAttribute("category") Category category) {
+    public String updateCategory(@Valid @ModelAttribute("category") Category category, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "category/edit";
+        }
         categoryRepository.save(category);
         return "redirect:/categories";
     }

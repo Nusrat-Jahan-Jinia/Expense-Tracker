@@ -3,8 +3,10 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.entity.Tag;
 import com.example.expensetracker.repository.TagRepository;
 import com.example.expensetracker.service.TagService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +36,10 @@ public class TagController {
     }
 
     @PostMapping(value = "/create")
-    public String addTag(Tag tag ) {
+    public String addTag(@Valid Tag tag, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "tag/create";
+        }
         tagRepository.save(tag);
         return "redirect:/tags";
     }
@@ -53,7 +58,10 @@ public class TagController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateTag(@ModelAttribute("category") Tag tag) {
+    public String updateTag(@Valid @ModelAttribute("tag") Tag tag, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "tag/edit";
+        }
         tagRepository.save(tag);
         return "redirect:/tags";
     }
