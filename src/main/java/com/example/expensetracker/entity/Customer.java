@@ -1,6 +1,9 @@
 package com.example.expensetracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.List;
 
 @Entity
@@ -9,7 +12,10 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
     private String name;
+    @Email
     private String email;
     private String gender;
     @OneToMany

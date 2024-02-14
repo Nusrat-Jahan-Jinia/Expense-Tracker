@@ -4,8 +4,10 @@ import com.example.expensetracker.entity.Customer;
 import com.example.expensetracker.repository.CustomerRepository;
 import com.example.expensetracker.repository.ProductRepository;
 import com.example.expensetracker.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +38,10 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/create")
-    public String addCustomer(Customer customer) {
+    public String addCustomer(@Valid Customer customer, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "customer/create";
+        }
         customerRepository.save(customer);
         return "redirect:/customers";
     }
@@ -55,7 +60,10 @@ public class CustomerController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateCustomer(@ModelAttribute("customer") Customer customer) {
+    public String updateCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "customer/create";
+        }
         customerRepository.save(customer);
         return "redirect:/customers";
     }

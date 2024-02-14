@@ -51,9 +51,11 @@
                     <form th:object="${customer}" th:action="@{/customers/create}" method="post">
                         <label for="name">Name:</label>
                         <input type="text" id="name" th:field="*{name}"/><br/>
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
 
                         <label for="email">Email:</label>
                         <input type="email" id="email" th:field="*{email}"/><br/>
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
 
                         <label for="gender">Gender:</label>
                         <input type="text" id="gender" th:field="*{gender}"/><br/>
