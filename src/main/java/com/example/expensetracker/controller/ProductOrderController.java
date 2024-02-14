@@ -5,8 +5,10 @@ import com.example.expensetracker.repository.ProductOrderRepository;
 import com.example.expensetracker.service.CustomerService;
 import com.example.expensetracker.service.ProductOrderService;
 import com.example.expensetracker.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -51,7 +53,14 @@ public class ProductOrderController {
     }
 
     @PostMapping(value = "/create")
-    public String addOrder(ProductOrder productOrder) {
+    public String addOrder(@Valid @ModelAttribute("order") ProductOrder productOrder, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Customer> customers = customerService.getCustomers();
+            List<Product> products = productService.getProducts();
+            model.addAttribute("customers", customers);
+            model.addAttribute("products", products);
+            return "order/create";
+        }
         productOrderRepository.save(productOrder);
         return "redirect:/orders";
     }
@@ -74,7 +83,14 @@ public class ProductOrderController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateCategory(@ModelAttribute("order") ProductOrder productOrder) {
+    public String updateCategory(@Valid @ModelAttribute("order") ProductOrder productOrder, Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<Customer> customers = customerService.getCustomers();
+            List<Product> products = productService.getProducts();
+            model.addAttribute("customers", customers);
+            model.addAttribute("products", products);
+            return "order/edit";
+        }
         productOrderRepository.save(productOrder);
         return "redirect:/orders";
     }

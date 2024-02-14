@@ -62,15 +62,17 @@
 
                         <label>Order By:</label>
                         <input type="text" th:field="*{orderBy}" /><br/>
+                            <div th:if="${#fields.hasErrors('orderBy')}" th:errors="*{orderBy}" class="text-danger"></div>
 
                         <label>Order Date:</label>
                         <input type="date" th:field="*{orderDate}" /><br/>
+                            <div th:if="${#fields.hasErrors('orderDate')}" th:errors="*{orderDate}" class="text-danger"></div>
 
                         <label>Customer:</label>
                         <select th:field="*{customer.id}">
                             <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
                         </select><br/>
-
+                            <div th:if="${#fields.hasErrors('customer.id')}" th:errors="*{customer.id}" class="text-danger"></div>
                         <label>Product:</label>
                         <div th:each="product : ${products}">
                             <input type="checkbox" th:id="'product_' + ${product.id}"

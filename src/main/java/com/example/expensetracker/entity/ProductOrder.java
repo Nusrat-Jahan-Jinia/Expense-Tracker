@@ -1,6 +1,9 @@
 package com.example.expensetracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,9 +12,14 @@ public class ProductOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
     private String orderBy;
+
+    @NotEmpty
     private String orderDate;
 
+    @NotNull
     @ManyToOne
     private Customer customer;
 

@@ -66,14 +66,16 @@
             <div class="col-md-12">
                 <div class="d-flex border border-light-subtle p-4 justify-content-md-center flex-column">
 
-                    <h2>Add Customer and Product</h2>
+                    <h2>Update Customer and Product</h2>
                     <form class="d-flex flex-column" th:object="${order}" method="post">
                         <input type="hidden" name="orderId" th:value="${orderId}" />
                         <label>Order By:</label>
                         <input type="text" th:field="*{orderBy}" /><br/>
+                        <div th:if="${#fields.hasErrors('orderBy')}" th:errors="*{orderBy}" class="text-danger"></div>
 
                         <label>Order Date:</label>
                         <input type="date" th:field="*{orderDate}" /><br/>
+                        <div th:if="${#fields.hasErrors('orderDate')}" th:errors="*{orderDate}" class="text-danger"></div>
 
                         <label>Customer:</label>
                         <select th:field="*{customer.id}">
